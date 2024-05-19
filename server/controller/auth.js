@@ -11,7 +11,7 @@ const {
 } = require("../utils/utils");
 const User = require("../model/user");
 
-const login = async (req, res, next) => {
+const register = async (req, res, next) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
 
@@ -54,7 +54,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
