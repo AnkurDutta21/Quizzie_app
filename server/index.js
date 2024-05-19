@@ -1,4 +1,4 @@
-requre('dotenv').config()
+require('dotenv').config()
 const express = require("express");
 const dbConnect = require("./config/dbConfig");
 const errorHandler = require("./middleware/errorHandler");
