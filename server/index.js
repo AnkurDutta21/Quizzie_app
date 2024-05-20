@@ -3,6 +3,7 @@ const express = require("express");
 const dbConnect = require("./config/dbConfig");
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require('./routes/auth')
+const pollRoutes = require('./routes/poll')
 const cors =  require('cors')
 
 
@@ -11,6 +12,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json())
 app.use(cors())
 app.use("/api/v1/auth",authRoutes)
+app.use("/api/v1/poll",pollRoutes)
 
 
 app.use(errorHandler)
