@@ -4,6 +4,7 @@ const dbConnect = require("./config/dbConfig");
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require('./routes/auth')
 const pollRoutes = require('./routes/poll')
+const quizRoutes = require('./routes/quiz')
 const cors =  require('cors')
 
 
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/poll",pollRoutes)
+app.use("/api/v1/quiz",quizRoutes)
 
 
 app.use(errorHandler)

@@ -19,7 +19,7 @@ const { successResponse, errorResponse, createError } = require("../utils/respon
 const addQuiz = async (req, res, next) => {
   try {
     const { quizName, questions, timer } = req.body;
-
+      
     if (!quizName) {
       return next(createError(400, QUIZ_NAME_REQUIRED));
     }
@@ -147,10 +147,10 @@ const attemptQuiz = async (req, res, next) => {
 
 const updateQuiz = async (req, res, next) => {
   try {
-    const { name, questions, timer } = req.body;
+    const { quizName, questions, timer } = req.body;
     const { id } = req.params;
 
-    if (!name) {
+    if (!quizName) {
       return next(createError(400, QUIZ_NAME_REQUIRED));
     }
     if (!timer) {
@@ -175,7 +175,7 @@ const updateQuiz = async (req, res, next) => {
         _id: id,
         createdBy: req.user._id,
       },
-      { name, questions, timer },
+      { quizName, questions, timer },
       { new: true }
     );
 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 const optionSchema = new mongoose.Schema({
   text: {
