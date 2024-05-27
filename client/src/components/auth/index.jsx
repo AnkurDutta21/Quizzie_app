@@ -21,6 +21,10 @@ const Auth = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
   };
 
   const validateForm = () => {
@@ -32,7 +36,7 @@ const Auth = () => {
       errors.email = "Invalid Email";
     }
     if (formData.password.length < 6) {
-      errors.password = "Weak password";
+      errors.password = "Invalid password";
     }
     if (isSignUp && formData.password !== formData.confirmPassword) {
       errors.confirmPassword = "Password doesn't match";
@@ -59,7 +63,7 @@ const Auth = () => {
 
   return (
     <>
-       {loading && <Loader/>}
+      {loading && <Loader />}
       <div className={styles.auth}>
         <h1>QUIZZIE</h1>
         <div className={styles.authSwitch}>
@@ -85,14 +89,11 @@ const Auth = () => {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Name"
+                  placeholder={errors.name || "Name"}
                   value={formData.name}
                   onChange={handleChange}
                   className={errors.name ? styles.error : ""}
                 />
-                {errors.name && (
-                  <div className={styles.errorMessage}>{errors.name}</div>
-                )}
               </div>
             )}
             <div className={styles.inputGroup}>
@@ -101,14 +102,11 @@ const Auth = () => {
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Email"
+                placeholder={errors.email || "Email"}
                 value={formData.email}
                 onChange={handleChange}
                 className={errors.email ? styles.error : ""}
               />
-              {errors.email && (
-                <div className={styles.errorMessage}>{errors.email}</div>
-              )}
             </div>
             <div className={styles.inputGroup}>
               <label htmlFor="password">Password</label>
@@ -116,14 +114,11 @@ const Auth = () => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Password"
+                placeholder={errors.password || "Password"}
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? styles.error : ""}
               />
-              {errors.password && (
-                <div className={styles.errorMessage}>{errors.password}</div>
-              )}
             </div>
             {isSignUp && (
               <div className={styles.inputGroup}>
@@ -132,25 +127,19 @@ const Auth = () => {
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  placeholder="Confirm Password"
+                  placeholder={errors.confirmPassword || "Confirm Password"}
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={errors.confirmPassword ? styles.error : ""}
                 />
-                {errors.confirmPassword && (
-                  <div className={styles.errorMessage}>
-                    {errors.confirmPassword}
-                  </div>
-                )}
               </div>
             )}
           </div>
-          <button type="submit">{isSignUp ? "Sign Up" : "Log In"}</button>
+          <button className={styles.authSubmitBtn} type="submit">{isSignUp ? "Sign Up" : "Log In"}</button>
         </form>
       </div>
     </>
   );
 };
-
 
 export default Auth;

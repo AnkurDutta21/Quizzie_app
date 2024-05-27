@@ -56,7 +56,7 @@ label {
     font-size: 1rem;
 }
 
-input {
+.inputGroup input {
     padding: 0.35rem 0.75rem;
     font-size: 0.8rem;
     border: 1px solid #ccc;
@@ -73,7 +73,7 @@ input {
     font-size: 0.875rem;
 }
 
-button[type="submit"] {
+.authSubmitBtn {
     padding: 0.35rem 5.75rem;
     background: #007BFF;
     color: white;
@@ -94,7 +94,7 @@ button[type="submit"] {
         font-size: 0.875rem;
     }
 
-    button[type="submit"] {
+    .authSubmitBtn{
         padding: 0.5rem 1rem;
         font-size: 0.875rem;
     }

@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-
+import MainContainer from "./layout/mainContainer";
 
 const routes = [
   {
     path: "/",
     element: (
+      <MainContainer>
         <Home />
+      </MainContainer>
     ),
   },
 ];
