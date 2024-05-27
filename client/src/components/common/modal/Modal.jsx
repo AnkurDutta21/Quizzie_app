@@ -1,16 +1,14 @@
 import React from 'react';
 import styles from './styles.module.css';
 import Auth from '../../auth';
-import CreateQuiz from '../../createQuiz';
-import CreateQuestion from '../../createQuestion';
+import AddQuiz from '../../addQuiz';
+
 
 const Modal = () => {
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-               {/* <CreateQuiz/> */}
-               <CreateQuestion/>
-               {/* <Auth/> */}
+           <AddQuiz/>
             </div>
         </div>
     );

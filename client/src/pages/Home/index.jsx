@@ -3,7 +3,6 @@ import Modal from '../../components/common/modal/Modal'
 import styles from './styles.module.css'
 import Dashboard from '../../components/dashboard'
 import QuizAnalysis from '../../components/analytics'
-import CreateQuiz from '../../components/createQuiz'
 
 const Home = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 
-const CreateQuestion = () => {
+const AddQuestion = () => {
   const [questions, setQuestions] = useState({
     quizName: "",
     quizType: "",
@@ -35,7 +35,7 @@ const CreateQuestion = () => {
           <label>Quiz Type:</label>
           <br />
           {quizTypes.map((type, index) => (
-            <button
+            <div
               key={index}
               className={`${styles.quizTypeButton} ${
                 questions.quizType === type ? styles.selected : ""
@@ -43,12 +43,12 @@ const CreateQuestion = () => {
               onClick={() => handleQuizTypeChange(type)}
             >
               {type}
-            </button>
+            </div>
           ))}
         </div>
         <br />
         <div className={styles.btnsWrp}>
-        <button>Cancel</button>
+        <button >Cancel</button>
         <button type="submit">Continue</button>
         </div>
       </form>
@@ -56,4 +56,4 @@ const CreateQuestion = () => {
   );
 };
 
-export default CreateQuestion;
+export default AddQuestion;

@@ -1,0 +1,133 @@
+.quizContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.viewIndex {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.addIndex {
+  font-size: 1.6rem;
+  color: #9f9f9f;
+}
+.indexContainer {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px #00000026;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #9f9f9f;
+  position: relative;
+}
+.delIndex {
+  position: absolute;
+  top: 0rem;
+  left: 2.5rem;
+  color: #000;
+}
+.indexContainer.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* .questionsContainer {
+  max-width: 500px;
+} */
+.optionTypesWrp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #9f9f9f;
+}
+.optionType {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #9f9f9f;
+}
+.optionType label {
+  margin-top: 0.3rem;
+}
+.questionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+.questionContainer input[placeholder="Poll Question"] {
+  min-width: 32rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 25px 0px #00000026;
+}
+
+.optionContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.optionContainer input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 18px;
+}
+.addOptionBtn {
+  max-width: fit-content;
+  padding: 0.4rem 3.6rem;
+  margin-left: 1.3rem;
+  background: #fff;
+  box-shadow: 0px 0px 25px 0px #00000026;
+  border: none;
+  border-radius: 0.4rem;
+  color: #9f9f9f;
+}
+.timerWrp{
+  position: absolute;
+  top: 55%;
+  left: 84%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.timerOption {
+  max-width: 5rem;
+  padding: 0.2rem 1rem;
+  border-radius: 0.3rem;
+  border: none;
+  box-shadow: 0px 0px 15px 0px #00000026;
+  border-radius: 0.3rem;
+  border: none;
+  box-shadow: 0px 0px 15px 0px #00000026;
+}
+.selectedTimerOption {
+  background: #d60000;
+}
+.createQuizButton {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
