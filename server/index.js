@@ -5,6 +5,7 @@ const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require('./routes/auth')
 const pollRoutes = require('./routes/poll')
 const quizRoutes = require('./routes/quiz')
+const userStatsRoutes = require('./routes/userStats')
 const cors =  require('cors')
 
 
@@ -15,6 +16,7 @@ app.use(cors())
 app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/poll",pollRoutes)
 app.use("/api/v1/quiz",quizRoutes)
+app.use("/api/v1/userStats",userStatsRoutes)
 
 
 app.use(errorHandler)

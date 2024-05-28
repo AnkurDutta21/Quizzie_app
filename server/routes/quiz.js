@@ -1,6 +1,6 @@
 const express = require('express');
 const verifyToken = require('../middleware/authHandler');
-const { addQuiz, getQuiz, getUserQuizzes, updateQuiz, deleteQuiz, attemptQuiz } = require('../controller/quiz');
+const { addQuiz, getQuiz, getUserQuizzes, updateQuiz, deleteQuiz, attemptQuiz, getQuizAnalysis } = require('../controller/quiz');
 
 
 const router = express.Router()
@@ -11,4 +11,5 @@ router.get('/userQuiz',verifyToken,getUserQuizzes)
 router.patch('/updateQuiz/:id',verifyToken,updateQuiz)
 router.delete('/deleteQuiz/:id',verifyToken,deleteQuiz)
 router.post('/attemptQuiz/:id',attemptQuiz)
+router.get('/getQuizAnalysis/:id',verifyToken,getQuizAnalysis)
 module.exports = router;

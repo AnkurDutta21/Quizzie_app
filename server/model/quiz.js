@@ -16,12 +16,17 @@ const questionSchema = new mongoose.Schema({
   },
   optionsType: {
     type: String,
-    enum: ['text', 'image', 'textAndImage'],
+    enum: ["Text", "Image URL", "Text & Image URL"],
     required: true
   },
   options: {
     type: [optionSchema],
     required: true
+  },
+  timer: {
+    type: Number,
+    enum:[0,5000,10000],
+    default: 0
   },
   answer: {
     type: Number,
@@ -51,10 +56,7 @@ const quizSchema = new mongoose.Schema({
     type: [questionSchema],
     required: true
   },
-  timer: {
-    type: Number,
-    default: null
-  },
+  
   createdAt: {
     type: Date,
     default: Date.now()

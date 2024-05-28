@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
 
     const validPassword = await comparehashedData(password, user.password);
     if (!validPassword) {
-      return errorResponse(res, 401, messageHelper.INVALID_EMAIL_OR_PASSWORD);
+      return errorResponse(res, 401, messageHelper.INVALID_PASSWORD);
     }
 
     const token = await jwtsign(user._id);
@@ -85,6 +85,7 @@ const login = async (req, res, next) => {
     );
 
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };

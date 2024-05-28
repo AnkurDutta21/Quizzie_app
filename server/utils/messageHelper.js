@@ -31,6 +31,7 @@ module.exports = {
     QUIZ_NAME_REQUIRED:'Quiz name is required',
     QUIZ_TIMER_REQUIRED:'Timer is required',
     QUESTIONS_REQUIRED:'Question are required',
+    QUIZ_ANALYSIS_FETCHED:'Quiz analysis fetched sucessfully',
     QUESTION_OPTIONS_INVALID:"Each question must have between 2 and 4 options",
     MAX_QUESTIONS_EXCEEDED:'A maximum of 5 questions is allowed',
     POLL_CREATED:'Poll created successfully',
@@ -38,9 +39,12 @@ module.exports = {
     POLL_FETCHED:'Polls fetched succesfully',
     POLL_DELETED:'Poll deleted succesfully',
     POLL_RESULTS_REQUIRED:'Poll results are required',
+    POLL_ANALYSIS_FETCHED:'Poll analysis fetched sucessfully',
     QUESTION_NOT_FOUND:'Question not found',
     POLL_COMPLETE:'Poll attempted succesfully',
     POLL_UPDATED:'Poll updated succesfully',
     POLL_NAME_REQUIRED:'Poll name is required',
+    QUIZ_AND_POLL_DATA_FETCHED:'All quizes and polls stats fetched successfully',
+    ALL_POLLS_AND_QUIZES_FETCHED:'All user quizes and polls fetched successfully'
     
 }
