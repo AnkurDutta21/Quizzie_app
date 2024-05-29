@@ -4,6 +4,10 @@ import MainContainer from "./layout/mainContainer";
 import Dashboard from "./pages/Dashboard";
 import QuizAnalysis from "./pages/quizAnalysis";
 import Analytics from "./pages/Analytics";
+import QuizViewer from "./layout/quizViewer";
+import QuizPage from "./pages/quiz";
+import QuizResults from "./pages/QuizResults";
+import PollAnalysis from "./pages/pollAnalysis";
 
 const routes = [
   {
@@ -34,6 +38,30 @@ const routes = [
       <MainContainer>
         <QuizAnalysis/>
       </MainContainer>
+    ),
+  },
+  {
+    path: "/pollAnalysis/:pollId",
+    element: (
+      <MainContainer>
+        <PollAnalysis/>
+      </MainContainer>
+    ),
+  },
+  {
+    path: "/quiz/:quizId",
+    element: (
+      <QuizViewer>
+        <QuizPage/>
+      </QuizViewer>
+    ),
+  },
+  {
+    path: "/quiz/results",
+    element: (
+      <QuizViewer>
+        <QuizResults/>
+      </QuizViewer>
     ),
   },
 ];

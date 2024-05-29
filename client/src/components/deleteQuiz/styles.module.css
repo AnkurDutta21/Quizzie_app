@@ -1,5 +1,11 @@
 .container{
-
+    width: 68%;
+    margin: auto;
+}
+.headerText{
+    font-size: 2rem;
+    text-wrap: wrap;
+    text-align: center;
 }
 .btnsWrp{
     margin-top: 2rem;
@@ -12,7 +18,7 @@
     width: fit-content;
     cursor: pointer;
     border: none;
-    padding: 1rem 2rem;
+    padding: 0.4rem 3rem;
     border-radius: 7px;
     font-weight: 400;
     font-size: 1.2rem;
@@ -22,6 +28,6 @@
     white-space: pre-line;
 }
 .delModalBtn{
-    background-color: #FF4B4B;
-    color: #fff;
+    background-color: #FF4B4B !important;
+    color: #fff !important;
 }

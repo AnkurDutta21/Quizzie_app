@@ -8,15 +8,14 @@ import { formatDate } from '../../utils/formatDate';
 import Loader from '../../components/common/loader';
 
 const QuizAnalysis = () => {
-  const { quizId } = useParams(); // Destructuring useParams directly
+  const { quizId } = useParams(); 
   const {getApiData,loading} = useFetchData();
-  const [quizData, setQuizData] = useState({}); // Initialize with an object instead of an array
-
+  const [quizData, setQuizData] = useState({}); 
   useEffect(() => {
     const apiData = async () => {
       try {
         const response = await getApiData(URL + ENDPOINTS.QUIZANALYSIS + quizId);
-        setQuizData(response?.data?.quizAnalysisData); // Assuming the response is an object containing data
+        setQuizData(response?.data?.quizAnalysisData); 
         console.log(response, '[[[');
         console.log(quizData, 'pppp');
       } catch (error) {
@@ -24,7 +23,7 @@ const QuizAnalysis = () => {
       }
     };
     apiData();
-  }, [quizId]); // Add quizId to dependency array
+  }, [quizId]);
 
   return(
     <>
@@ -60,9 +59,9 @@ const QuizAnalysis = () => {
                 />
               </div>
 
-              {/* {quizData.questions.length - 1 !== index && (
+              {quizData.questions.length - 1 !== index && (
                 <div className={styles.divider}></div>
-              )} */}
+              )}
             </div>
           ))}
         </div>

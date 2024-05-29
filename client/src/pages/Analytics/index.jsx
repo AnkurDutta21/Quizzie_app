@@ -9,8 +9,8 @@ import { formatDate } from "../../utils/formatDate";
 import {Link} from 'react-router-dom'
 import Loader from "../../components/common/loader";
 import { errorToast, successToast } from "../../utils/showToast";
-import useModal from "../../hooks/useModal";
-
+import { useModal } from "../../hooks/useModalContext";
+import {copyLink} from "../../utils/CopyLink"
 
 const Analytics = () => {
   const { getApiData,loading,error } = useFetchData();
@@ -54,9 +54,9 @@ const Analytics = () => {
               <td>{formatDate(quiz.createdAt)}</td>
               <td>{quiz.impressions}</td>
               <td className={styles.iconWrp}>
-                <img src={edit} className={styles.icon} />
-                <img src={del} className={styles.icon} onClick={()=>openModal('DELETEQUIZ',quiz.id)}/>
-                <img src={share} className={styles.icon} />
+                <img src={edit} className={styles.icon} onClick={()=>openModal('EDITQUIZ',{id:quiz.id,type:quiz.type,edit:true})} />
+                <img src={del} className={styles.icon} onClick={()=>openModal('DELETEQUIZ',{id:quiz.id,type:quiz.type})}/>
+                <img src={share} className={styles.icon} onClick={()=>copyLink(quiz.id,quiz.type)}/>
               </td>
               <td>
                 <Link to={`/${quiz.type}Analysis/${quiz.id}`} className={styles.detailsLink}>

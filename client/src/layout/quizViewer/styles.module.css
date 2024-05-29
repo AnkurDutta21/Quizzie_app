@@ -1,0 +1,23 @@
+.main {
+    background-color: #041325;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .childrenContainer {
+    background-color:#fff;
+    padding: 3rem;
+    height: 100%;
+    text-align: center;
+  }
+  
+  @media (min-width: 768px) {
+    .main {
+      padding: 3rem 6rem;
+    }
+  
+    .childrenContainer {
+      border-radius: 2rem;
+    }
+  }
+  

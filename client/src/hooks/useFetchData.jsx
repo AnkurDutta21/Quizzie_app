@@ -43,6 +43,22 @@ const useFetchData = () => {
       setLoading(false);
     }
   };
+
+
+  const patchApiData = async (url, data) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.patch(url, data, { headers: getHeaders() });
+      return response.data;
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const deleteApiData = async (url) => {
     setLoading(true);
     setError(null);
@@ -53,7 +69,6 @@ const useFetchData = () => {
       setError(err);
       throw err;
     } finally {
-      localStorage.removeItem('Token')
       setLoading(false);
     }
   };
@@ -61,6 +76,7 @@ const useFetchData = () => {
   return {
     getApiData,
     postApiData,
+    patchApiData,
     deleteApiData,
     loading,
     error,

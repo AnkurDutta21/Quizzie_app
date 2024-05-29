@@ -3,21 +3,24 @@ import styles from './styles.module.css';
 import Auth from '../../auth';
 import CreateQuiz from '../../createQuiz';
 import DeleteQuiz from '../../deleteQuiz';
-import useModal from '../../../hooks/useModal';
+import { useModal } from '../../../hooks/useModalContext';
 
-const Modal = ({modalState,closeModal}) => {
-  console.log(modalState, 'from modal');
-  
+const Modal = () => {
+  const {modalState} = useModal()
+  console.log(modalState.modalType,'ppppfrom modal')
   const renderComponent = () => {
-    switch (modalState.ModalType) {
+    switch (modalState.modalType) {
       case 'AUTH':
         return <Auth />;
       case 'CREATEQUIZ':
         console.log('create')
-        return <CreateQuiz closeModal={closeModal}/>;
+        return <CreateQuiz/>;
+        case 'EDITQUIZ':
+        console.log('edit')
+        return <CreateQuiz/>;
         case 'DELETEQUIZ':
           console.log('delete')
-        return <DeleteQuiz closeModal={closeModal} modalData={modalState.ModalData}/>;
+        return <DeleteQuiz/>;
       default:
         return null;
     }

@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import AddQuiz from "./addQuiz";
 import AddQuestion from "./addQuestion";
 import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
+import { useModal } from "../../hooks/useModalContext";
 
-const CreateQuiz = ({closeModal}) => {
-  const { postApiData } = useFetchData();
+const CreateQuiz = () => {
+  const { postApiData, patchApiData, getApiData } = useFetchData();
+  const { closeModal, modalState } = useModal();
+  const { id, type, edit } = modalState.modalData;
 
   const [quizDetails, setQuizDetails] = useState({
     quizName: "",
@@ -16,13 +19,13 @@ const CreateQuiz = ({closeModal}) => {
   const [questions, setQuestions] = useState([
     {
       question: "",
-      optionType: "",
+      optionsType: "",
       correctAnswerIndex: 0,
       options: [
         { id: 1, text: "", url: "" },
         { id: 2, text: "", url: "" },
       ],
-      timerOption: 0,
+      timer: 0,
     },
   ]);
 
@@ -30,6 +33,7 @@ const CreateQuiz = ({closeModal}) => {
   const [next, setNext] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
   const validateFields = () => {
     const errors = {};
     if (!quizDetails.quizName.trim()) {
@@ -48,7 +52,9 @@ const CreateQuiz = ({closeModal}) => {
     if (!currentQuestion.question.trim()) {
       newErrors.question = "Question text is required.";
     }
-
+    if (!currentQuestion.optionsType) {
+      newErrors.optionsType = "Option type must be selected.";
+    } 
     if (currentQuestion.options.some((option) => !option.text.trim())) {
       newErrors.options = "All options must have text.";
     }
@@ -63,6 +69,7 @@ const CreateQuiz = ({closeModal}) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleNext = (e) => {
     e.preventDefault();
     const validationErrors = validateFields();
@@ -83,28 +90,62 @@ const CreateQuiz = ({closeModal}) => {
     setIsSubmitted(true);
     if (validateQuestion()) {
       const addQuizData = {
-        quizName: quizDetails.quizName,
+        [quizDetails.quizType === "Poll Type" ? "pollName" : "quizName"]:
+          quizDetails.quizName,
         questions: questions.map((question) => ({
           question: question.question,
-          optionsType: question.optionType,
+          optionsType: question.optionsType,
           options: question.options.map((option) => ({
             text: option.text,
             image: option.url,
           })),
           answer: question.correctAnswerIndex,
-          timer: question.timerOption,
+          timer: question.timer,
         })),
       };
-      const data = await postApiData(URL + ENDPOINTS.CREATE_QUIZ, addQuizData);
+
+      const endpoint = edit
+        ? `${URL}${type === 'quiz' ? ENDPOINTS.UPDATEQUIZ : ENDPOINTS.UPDATEPOLL}${id}`
+        : quizDetails.quizType === "Poll Type"
+        ? URL + ENDPOINTS.CREATEPOLL
+        : URL + ENDPOINTS.CREATE_QUIZ;
+
+      const data = edit
+        ? await patchApiData(endpoint, addQuizData)
+        : await postApiData(endpoint, addQuizData);
+
       console.log(data);
       console.log("Mapped object:", addQuizData);
     }
   };
 
+  useEffect(() => {
+    const editData = async () => {
+      try {
+        const endpoint = type === 'quiz' ? ENDPOINTS.GETQUIZ : ENDPOINTS.GETPOLL;
+        const response = await getApiData(`${URL}${endpoint}${id}`);
+        console.log(response?.data?.quiz);
+
+        setQuizDetails({
+          quizName: response?.data?.quiz?.quizName || response?.data?.quiz?.pollName || "",
+          quizType: type === 'quiz' ? "Quiz Type" : "Poll Type",
+        });
+        setQuestions(response?.data?.quiz?.questions || []);
+        console.log(response?.data?.quiz?.questions)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (edit) {
+      editData();
+    }
+  }, []);
+
   return (
     <div className={styles.createQuiz}>
       <form onSubmit={handleSubmit}>
-        {!next ? (
+        {!next && !edit ? (
           <AddQuestion
             handleQuizTypeChange={handleQuizTypeChange}
             questions={quizDetails}
@@ -113,6 +154,7 @@ const CreateQuiz = ({closeModal}) => {
           />
         ) : (
           <AddQuiz
+            quizDetails={quizDetails}
             handleSubmit={handleSubmit}
             questions={questions}
             setQuestions={setQuestions}
@@ -135,7 +177,7 @@ const CreateQuiz = ({closeModal}) => {
               Next
             </button>
           ) : (
-            <button type="submit">Create Quiz</button>
+            <button type="submit">{edit ? "Update Quiz" : "Create Quiz"}</button>
           )}
         </div>
       </form>
