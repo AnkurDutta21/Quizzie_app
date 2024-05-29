@@ -44,7 +44,6 @@ module.exports = {
     POLL_COMPLETE:'Poll attempted succesfully',
     POLL_UPDATED:'Poll updated succesfully',
     POLL_NAME_REQUIRED:'Poll name is required',
-    QUIZ_AND_POLL_DATA_FETCHED:'All quizes and polls stats fetched successfully',
-    ALL_POLLS_AND_QUIZES_FETCHED:'All user quizes and polls fetched successfully'
+    DATA_FETCHED:'Data fetched successfully'
     
 }

@@ -203,6 +203,7 @@ const getQuizAnalysis = async (req, res, next) => {
       createdAt: quiz.createdAt,
       quizName: quiz.quizName,
       questions: quiz.questions.map(question => ({
+        question:question.question,
         attempts: question.attempts,
         corrects: question.corrects,
         incorrect:question.attempts-question.corrects,

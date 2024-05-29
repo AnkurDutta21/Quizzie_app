@@ -1,6 +1,6 @@
 const Poll = require("../model/poll");
 const Quiz = require("../model/quiz");
-const { INVALID_REQUEST, ALL_POLLS_AND_QUIZES_FETCHED, QUIZ_AND_POLL_DATA_FETCHED } = require("../utils/messageHelper");
+const { INVALID_REQUEST, DATA_FETCHED } = require("../utils/messageHelper");
 const { errorResponse, successResponse } = require("../utils/responseHelper");
 
 const getTrendings = async (req, res, next) => {
@@ -17,7 +17,7 @@ const getTrendings = async (req, res, next) => {
     ];
 
     filteredData.sort((a, b) => b.impressions - a.impressions);
-    successResponse(res, 200, {
+    successResponse(res, 200, DATA_FETCHED,{
       result: filteredData.length,
       data: { ...filteredData },
     });
@@ -63,7 +63,7 @@ const getStats = async (req, res, next) => {
     });
 
     QuizAndPollData.totalImpressions = totalPollImpressions + totalQuizImpressions;
-    successResponse(res, 200,QUIZ_AND_POLL_DATA_FETCHED ,{ ...QuizAndPollData });
+    successResponse(res, 200,DATA_FETCHED ,{ ...QuizAndPollData });
   } catch (error) {
     next(error);
   }
@@ -106,7 +106,7 @@ const getAllUserPollsAndQuizes = async (req, res, next) => {
     allQuizesAndPolls.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
-    successResponse(res, 200, ALL_POLLS_AND_QUIZES_FETCHED,{
+    successResponse(res, 200, DATA_FETCHED,{
       results: allQuizesAndPolls.length,
       data: allQuizesAndPolls,
     });
