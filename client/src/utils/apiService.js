@@ -4,7 +4,7 @@ export const ENDPOINTS = {
     REGISTER: '/api/v1/auth/register',
     CREATE_QUIZ:'/api/v1/quiz/addQuiz',
     UPDATE_QUIZ:'/api/v1/quiz',
-    DELETE_QUIZ:'/api/v1/quiz',
+    DELETE_QUIZ:'/api/v1/quiz/deleteQuiz/',
     TRENDINGS:'/api/v1/userStats/trendings',
     ANALYTICS:'/api/v1/userStats/analytics',
     ALLPOLLSANDQUIZES:'/api/v1/userStats/getAllpollsAndQuizzes',

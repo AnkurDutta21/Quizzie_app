@@ -9,7 +9,7 @@ const modalReducer = (state, action) => {
   switch (action.type) {
     case OPEN_MODAL:
       console.log(action.payload, "from reducer");
-      return { ...state, isOpen: true, ModalType: action.payload };
+      return { ...state, isOpen: true, ModalType: action.payload.modalType,modalData:action.payload.modalData };
     case CLOSE_MODAL:
       return { ...state, isOpen: false, ModalType: "" };
     default:
@@ -22,10 +22,11 @@ const useModal = () => {
   const [modalState, dispatch] = useReducer(modalReducer, {
     isOpen: false,
     ModalType: "",
+    ModalData:"",
   });
 
-  const openModal = (modalType) => {
-    dispatch({ type: OPEN_MODAL, payload: modalType });
+  const openModal = (modalType,modalData) => {
+    dispatch({ type: OPEN_MODAL, payload: {modalType,modalData}});
   };
 
   const closeModal = () => {

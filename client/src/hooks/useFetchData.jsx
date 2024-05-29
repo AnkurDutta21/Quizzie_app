@@ -43,10 +43,25 @@ const useFetchData = () => {
       setLoading(false);
     }
   };
+  const deleteApiData = async (url) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.delete(url, { headers: getHeaders() });
+      return response.data;
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      localStorage.removeItem('Token')
+      setLoading(false);
+    }
+  };
 
   return {
     getApiData,
     postApiData,
+    deleteApiData,
     loading,
     error,
   };

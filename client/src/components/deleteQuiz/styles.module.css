@@ -1,0 +1,27 @@
+.container{
+
+}
+.btnsWrp{
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+}
+.btnsWrp button{
+    outline: 0;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    background-color: #fff;
+    color: #474444;
+    box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+    white-space: pre-line;
+}
+.delModalBtn{
+    background-color: #FF4B4B;
+    color: #fff;
+}

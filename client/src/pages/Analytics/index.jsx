@@ -9,10 +9,12 @@ import { formatDate } from "../../utils/formatDate";
 import {Link} from 'react-router-dom'
 import Loader from "../../components/common/loader";
 import { errorToast, successToast } from "../../utils/showToast";
+import useModal from "../../hooks/useModal";
 
 
 const Analytics = () => {
   const { getApiData,loading,error } = useFetchData();
+  const {openModal} = useModal()
   const [data,setData] = useState([])
   useEffect(() => {
     const apiData = async () => {
@@ -53,7 +55,7 @@ const Analytics = () => {
               <td>{quiz.impressions}</td>
               <td className={styles.iconWrp}>
                 <img src={edit} className={styles.icon} />
-                <img src={del} className={styles.icon} />
+                <img src={del} className={styles.icon} onClick={()=>openModal('DELETEQUIZ',quiz.id)}/>
                 <img src={share} className={styles.icon} />
               </td>
               <td>
