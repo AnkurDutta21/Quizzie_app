@@ -1,12 +1,13 @@
-.questionContainer {
-  padding: 2rem;
-  width: 100%;
-
+.addQuestionContainer {
+  padding: 2rem 0rem;
+  display: flex;
+  flex-direction: column;
+  /* gap: 0.5rem; */
 }
 .quizName {
   box-shadow: 0px 0px 25px 0px #00000026;
   border-radius: 0.3rem;
-  min-width: 25rem;
+  min-width: 30rem;
   padding: 1rem;
   font-size: 1.2rem;
   border: none;
@@ -19,6 +20,7 @@
   flex-direction: row;
   align-items: center;
   gap: 2rem;
+  padding: 1rem;
   justify-content: space-between;
 }
 .optionWrp label{
@@ -52,11 +54,16 @@
   flex: 1;
 }
 
-.btnsWrp button[type="submit"] {
-  background: #60b84b;
-  color: #FFF;
+.nextBtn {
+  background: #60b84b !important;
+  color: #FFF !important;
 }
 .selected{
   background: #60b84b;
   color: #FFF;
+}
+.error{
+  margin: 1rem 0rem 0rem 1rem;
+  color: red;
+  font-weight: 600;
 }

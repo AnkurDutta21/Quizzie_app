@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import del from "../../assets/del.png";
-const AddQuiz = () => {
-  const [questions, setQuestions] = useState([
-    {
-      question: "",
-      optionType: "",
-      correctAnswerIndex: 0,
-      options: [
-        { id: 1, text: "" },
-        { id: 2, text: "" },
-      ],
-      timerOption: 0,
-    },
-  ]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+import del from "../../../assets/del.png";
 
+const AddQuiz = ({
+  handleSubmit,
+  questions,
+  setQuestions,
+  errors,
+  isSubmitted,
+  currentQuestionIndex,
+  setCurrentQuestionIndex,
+}) => {
   const handleQuestionChange = (event) => {
     const { name, value } = event.target;
     const newQuestions = [...questions];
@@ -23,10 +18,10 @@ const AddQuiz = () => {
     setQuestions(newQuestions);
   };
 
-  const handleOptionChange = (optionIndex, e) => {
+  const handleOptionChange = (optionIndex, e, field) => {
     const { value } = e.target;
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].options[optionIndex].text = value;
+    newQuestions[currentQuestionIndex].options[optionIndex][field] = value;
     setQuestions(newQuestions);
   };
 
@@ -43,6 +38,7 @@ const AddQuiz = () => {
       newQuestions[currentQuestionIndex].options.push({
         id: newOptionId,
         text: "",
+        url: "",
       });
       setQuestions(newQuestions);
     }
@@ -62,10 +58,11 @@ const AddQuiz = () => {
         ...questions,
         {
           question: "",
+          optionType: "",
           correctAnswerIndex: 0,
           options: [
-            { id: 1, text: "" },
-            { id: 2, text: "" },
+            { id: 1, text: "", url: "" },
+            { id: 2, text: "", url: "" },
           ],
           timerOption: 0,
         },
@@ -84,20 +81,17 @@ const AddQuiz = () => {
       );
     }
   };
+
   const handleTimerOptionChange = (milliseconds) => {
     const newQuestions = [...questions];
     newQuestions[currentQuestionIndex].timerOption = milliseconds;
     setQuestions(newQuestions);
   };
+
   const handleOptionTypeChange = (type) => {
     const newQuestions = [...questions];
     newQuestions[currentQuestionIndex].optionType = type;
     setQuestions(newQuestions);
-  };
-
-  const handleSubmit = () => {
-    // Handle form submission here
-    console.log(questions);
   };
 
   const handleIndexClick = (index) => {
@@ -110,6 +104,7 @@ const AddQuiz = () => {
     { label: "5 sec", value: 5000 },
     { label: "10 sec", value: 10000 },
   ];
+
   return (
     <div className={styles.quizContainer}>
       <div className={styles.viewIndex}>
@@ -145,20 +140,21 @@ const AddQuiz = () => {
         <div className={styles.questionContainer}>
           <input
             type="text"
-            placeholder="Poll Question"
+            placeholder="Quiz Question"
+            name="question"
             value={questions[currentQuestionIndex].question}
             onChange={handleQuestionChange}
           />
-          {/*optionsTypes-------------  */}
+          {isSubmitted && errors.question && (
+            <div className={styles.error}>{errors.question}</div>
+          )}
           <div className={styles.optionTypesWrp}>
             <label>Option Type:</label>
             {optionType.map((type, index) => (
               <div key={index} className={styles.optionType}>
                 <input
                   type="radio"
-                  id={`optionType-${index}`}
-                  name="optionType"
-                  value={type}
+                  name={`optionType-${currentQuestionIndex}`}
                   checked={questions[currentQuestionIndex].optionType === type}
                   onChange={() => handleOptionTypeChange(type)}
                 />
@@ -166,44 +162,83 @@ const AddQuiz = () => {
               </div>
             ))}
           </div>
-          {/*  */}
-
-          {/* options---------------- */}
-
-          {questions[currentQuestionIndex].options.map(
-            (option, optionIndex) => (
-              <div key={option.id} className={styles.optionContainer}>
-                <input
-                  type="radio"
-                  name={`correctAnswer-${currentQuestionIndex}`}
-                  checked={
-                    questions[currentQuestionIndex].correctAnswerIndex ===
-                    optionIndex
-                  }
-                  onChange={() => handleCorrectAnswerChange(optionIndex)}
-                />
-                <input
-                  type="text"
-                  placeholder="Text"
-                  value={option.text}
-                  onChange={(e) => handleOptionChange(optionIndex, e)}
-                />
-                {questions[currentQuestionIndex].options.length > 2 && (
-                  <button
-                    onClick={() => deleteOption(optionIndex)}
-                    className={styles.deleteButton}
-                  >
-                    <img src={del} alt="delete" />
-                  </button>
-                )}
-              </div>
-            )
+          <div className={styles.optionsWrp}>
+            {questions[currentQuestionIndex].options.map(
+              (option, optionIndex) => (
+                <div key={option.id} className={styles.optionContainer}>
+                  <input
+                    type="radio"
+                    name={`correctAnswer-${currentQuestionIndex}`}
+                    checked={
+                      questions[currentQuestionIndex].correctAnswerIndex ===
+                      optionIndex
+                    }
+                    onChange={() => handleCorrectAnswerChange(optionIndex)}
+                    className={`${
+                      questions[currentQuestionIndex].correctAnswerIndex ===
+                      optionIndex
+                        ? styles.correctOptionRadio
+                        : ""
+                    }`}
+                  />
+                  <input
+                    type="text"
+                    placeholder={
+                      questions[currentQuestionIndex].optionType === "Text"
+                        ? "Text"
+                        : questions[currentQuestionIndex].optionType ===
+                          "Image URL"
+                        ? "URL"
+                        : "Text & URL"
+                    }
+                    value={option.text}
+                    onChange={(e) => handleOptionChange(optionIndex, e, "text")}
+                    className={`${
+                      questions[currentQuestionIndex].correctAnswerIndex ===
+                      optionIndex
+                        ? styles.correctOptionInput
+                        : ""
+                    }`}
+                  />
+                  {questions[currentQuestionIndex].optionType ===
+                    "Text & Image URL" && (
+                    <input
+                      type="text"
+                      placeholder="URL"
+                      value={option.url}
+                      onChange={(e) =>
+                        handleOptionChange(optionIndex, e, "url")
+                      }
+                      className={`${
+                        questions[currentQuestionIndex].correctAnswerIndex ===
+                        optionIndex
+                          ? styles.correctOptionInput
+                          : ""
+                      }`}
+                    />
+                  )}
+                  {questions[currentQuestionIndex].options.length > 2 && (
+                    <button
+                      onClick={() => deleteOption(optionIndex)}
+                      className={styles.deleteButton}
+                    >
+                      <img src={del} alt="delete" />
+                    </button>
+                  )}
+                </div>
+              )
+            )}
+          </div>
+          {isSubmitted && errors.options && (
+            <div className={styles.error}>{errors.options}</div>
           )}
-          <button className={styles.addOptionBtn} onClick={() => addOption()}>
+          <button
+            className={styles.addOptionBtn}
+            onClick={addOption}
+            type="button"
+          >
             Add Option
           </button>
-          {/*  */}
-          {/* timer--------------- */}
           <div className={styles.timerWrp}>
             <label htmlFor="Timer">Timer</label>
             {timerOptions.map((option, index) => (
@@ -220,12 +255,8 @@ const AddQuiz = () => {
               </div>
             ))}
           </div>
-          {/* --------------------- */}
         </div>
       </div>
-      <button onClick={handleSubmit} className={styles.createQuizButton}>
-        Create Quiz
-      </button>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.createQuiz{
+    display: flex;
+    flex-direction: column;
+}
+.btnsWrp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14rem;
+}
+  .btnsWrp button {
+    padding: 0.5rem 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px 0px #00000040;
+    cursor: pointer;
+    flex: 1;
+  }
+  
+  .btnsWrp button[type="submit"] {
+    background: #60b84b;
+    color: #FFF;
+    text-wrap: nowrap;
+  }
+  .nextBtn {
+    background: #60b84b !important;
+    color: #FFF !important;
+  }

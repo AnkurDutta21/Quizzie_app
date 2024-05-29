@@ -1,5 +1,13 @@
 .container {
-    padding: 1rem;
+  background: #EDEDED;
+  /* width: 100%; */
+  padding: 6rem 2rem 0rem 2rem;
+  /* max-height: 100vh; */
+  }
+  .analyticsWrp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .heading {
@@ -8,7 +16,7 @@
   }
   
   .table {
-    width: 100%;
+   max-width: fit-content;
     border-collapse: separate; 
     border-spacing: 0rem;
     margin: 1.5rem 0;
@@ -64,4 +72,7 @@
 }
 .rounded{
     border: 0.8rem;
+}
+.roundedDiv{
+  
 }

@@ -1,117 +1,33 @@
 import React, { useEffect } from "react";
 import styles from "./styles.module.css";
-import useFetchData from "../../../hooks/useFetchData";
-import { ENDPOINTS, URL } from "../../../utils/apiService";
 import { formatDate } from "../../../utils/formatDate";
-const Trending = ({icon}) => {
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const data = await useFetchData(URL+ENDPOINTS.);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
+const Trending = ({icon,list}) => {
 
-//     fetchData();
-//   }, [third]);
-
-const list = [
-    {
-      _id: "1",
-      name: "Quiz 1",
-      impressions: 120,
-      createdAt: "2023-05-26T12:00:00Z"
-    },
-    {
-      _id: "2",
-      name: "Quiz 2",
-      impressions: 85,
-      createdAt: "2023-05-20T12:00:00Z"
-    },
-    {
-      _id: "3",
-      name: "Quiz 3",
-      impressions: 200,
-      createdAt: "2023-05-15T12:00:00Z"
-    },
-    {
-        _id: "1",
-        name: "Quiz 1",
-        impressions: 120,
-        createdAt: "2023-05-26T12:00:00Z"
-      },
-      {
-        _id: "2",
-        name: "Quiz 2",
-        impressions: 85,
-        createdAt: "2023-05-20T12:00:00Z"
-      },
-      {
-        _id: "3",
-        name: "Quiz 3",
-        impressions: 200,
-        createdAt: "2023-05-15T12:00:00Z"
-      },  {
-        _id: "1",
-        name: "Quiz 1",
-        impressions: 120,
-        createdAt: "2023-05-26T12:00:00Z"
-      },
-      {
-        _id: "2",
-        name: "Quiz 2",
-        impressions: 85,
-        createdAt: "2023-05-20T12:00:00Z"
-      },
-      {
-        _id: "3",
-        name: "Quiz 3",
-        impressions: 200,
-        createdAt: "2023-05-15T12:00:00Z"
-      },
-      {
-          _id: "1",
-          name: "Quiz 1",
-          impressions: 120,
-          createdAt: "2023-05-26T12:00:00Z"
-        },
-        {
-          _id: "2",
-          name: "Quiz 2",
-          impressions: 85,
-          createdAt: "2023-05-20T12:00:00Z"
-        },
-        {
-          _id: "3",
-          name: "Quiz 3",
-          impressions: 200,
-          createdAt: "2023-05-15T12:00:00Z"
-        }
-  ];
+  
+  const trendingArray = Array.isArray(list) ? list : Object.values(list);
 
   return (
     <div className={styles.container}>
       <h2>Trending Quizzes</h2>
 
-      {list && (
+      {trendingArray && (
         <div className={styles.quizCards}>
-          {list.map((el) => (
+          {trendingArray?.map((item,index) => (
             <div
               type="button"
             //   onClick={() => copyLink(el._id, el.category)}
-              key={el._id}
+              key={item._id}
               className={styles.card}
             >
               <div>
-                <p className={styles.name}>{el.name}</p>
+                <p className={styles.name}>{item.category === "quiz" ? item.quizName : item.pollName}</p>
                 <div className={styles.impressions}>
-                  <p>{el.impressions}</p>
+                  <p>{item.impressions}</p>
                   <img src={icon} />
                 </div>
               </div>
               <p className={styles.date}>
-                Created on: {formatDate(el.createdAt)}
+                Created on: {formatDate(item.createdAt)}
               </p>
             </div>
           ))}
