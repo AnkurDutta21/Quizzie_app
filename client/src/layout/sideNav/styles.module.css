@@ -28,6 +28,9 @@
     text-wrap: nowrap;
     cursor: pointer;
 }
+.options:hover{
+    box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
+}
 .active{
     box-shadow: 0px 0px 14px 0px #0000001F;
 }

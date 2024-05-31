@@ -14,40 +14,46 @@ const routes = [
     path: "/",
     element: (
       <ProtectedRoutes>
-      <MainContainer>
-        <Dashboard />
-      </MainContainer>
+        <MainContainer>
+          <Dashboard />
+        </MainContainer>
       </ProtectedRoutes>
     ),
-  },{
+  }, {
     path: "/analytics",
     element: (
-      <MainContainer>
-        <Analytics/>
+      <ProtectedRoutes>
+        <MainContainer>
+        <Analytics />
       </MainContainer>
+      </ProtectedRoutes>
     ),
   },
   {
     path: "/quizAnalysis/:quizId",
     element: (
-      <MainContainer>
-        <QuizAnalysis/>
+      <ProtectedRoutes>
+        <MainContainer>
+        <QuizAnalysis />
       </MainContainer>
+      </ProtectedRoutes>
     ),
   },
   {
     path: "/pollAnalysis/:pollId",
     element: (
-      <MainContainer>
-        <PollAnalysis/>
+      <ProtectedRoutes>
+        <MainContainer>
+        <PollAnalysis />
       </MainContainer>
+      </ProtectedRoutes>
     ),
   },
   {
     path: "/quiz/:quizId",
     element: (
       <QuizViewer>
-        <QuizPage isQuiz={true}/>
+        <QuizPage isQuiz={true} />
       </QuizViewer>
     ),
   },
@@ -55,7 +61,7 @@ const routes = [
     path: "/poll/:quizId",
     element: (
       <QuizViewer>
-        <QuizPage isQuiz={false}/>
+        <QuizPage isQuiz={false} />
       </QuizViewer>
     ),
   },
@@ -63,7 +69,7 @@ const routes = [
     path: "/quiz/results",
     element: (
       <QuizViewer>
-        <QuizResults/>
+        <QuizResults />
       </QuizViewer>
     ),
   },
@@ -71,7 +77,7 @@ const routes = [
     path: "/poll/results",
     element: (
       <QuizViewer>
-        <QuizResults/>
+        <QuizResults />
       </QuizViewer>
     ),
   },

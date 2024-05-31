@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 import styles from "./styles.module.css";
 import AddQuiz from "./addQuiz";
 import AddQuestion from "./addQuestion";
@@ -7,11 +6,16 @@ import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import { useModal } from "../../hooks/useModalContext";
 import { questionSchema, quizDetailsSchema } from "../../utils/validations";
+import CopyLink from "./copyLink";
+import { errorToast, successToast } from "../../utils/showToast";
+import Loader from "../common/loader";
 
 const CreateQuiz = () => {
-  const { postApiData, patchApiData, getApiData } = useFetchData();
+  const { postApiData, patchApiData, getApiData,loading } = useFetchData();
   const { closeModal, modalState } = useModal();
-  const { id, type, edit } = modalState.modalData;
+  const { modalData } = modalState;
+  const { id, type, edit } = modalData;
+
 
   const [quizDetails, setQuizDetails] = useState({
     quizName: "",
@@ -35,6 +39,8 @@ const CreateQuiz = () => {
   const [next, setNext] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [result, setResult] = useState([])
+  const [viewLink, setViewLink] = useState(false)
 
   const validateFields = async () => {
     try {
@@ -49,7 +55,7 @@ const CreateQuiz = () => {
         });
         setErrors(validationErrors);
       } else {
-        console.error(err); // log unexpected errors
+        console.error(err);
       }
       return false;
     }
@@ -105,21 +111,27 @@ const CreateQuiz = () => {
           timer: question.timer,
         })),
       };
+      try {
 
-      const endpoint = edit
-        ? `${URL}${
-            type === "quiz" ? ENDPOINTS.UPDATEQUIZ : ENDPOINTS.UPDATEPOLL
+        const endpoint = edit
+          ? `${URL}${type === "quiz" ? ENDPOINTS.UPDATEQUIZ : ENDPOINTS.UPDATEPOLL
           }${id}`
-        : quizDetails.quizType === "Poll Type"
-        ? URL + ENDPOINTS.CREATEPOLL
-        : URL + ENDPOINTS.CREATE_QUIZ;
+          : quizDetails.quizType === "Poll Type"
+            ? URL + ENDPOINTS.CREATEPOLL
+            : URL + ENDPOINTS.CREATE_QUIZ;
 
-      const data = edit
-        ? await patchApiData(endpoint, addQuizData)
-        : await postApiData(endpoint, addQuizData);
+        const data = edit
+          ? await patchApiData(endpoint, addQuizData)
+          : await postApiData(endpoint, addQuizData);
 
-      console.log(data);
-      console.log("Mapped object:", addQuizData);
+
+        const resultData = data?.data?.quiz || data?.data?.poll;
+        setResult(resultData)
+        setViewLink(true)
+        successToast(data.message)
+      } catch (error) {
+        errorToast(error?.response?.data?.error)
+      }
     }
   };
 
@@ -129,17 +141,14 @@ const CreateQuiz = () => {
         const endpoint =
           type === "quiz" ? ENDPOINTS.GETQUIZ : ENDPOINTS.GETPOLL;
         const response = await getApiData(`${URL}${endpoint}${id}`);
-        console.log(response?.data?.quiz);
+        const quizData = type === "quiz" ? response?.data?.quiz : response?.data?.poll;
 
         setQuizDetails({
-          quizName:
-            response?.data?.quiz?.quizName ||
-            response?.data?.quiz?.pollName ||
-            "",
-          quizType: type === "quiz" ? "Quiz Type" : "Poll Type",
+          quizName: quizData?.quizName || quizData?.pollName || "",
+          quizType: type === "quiz" ? "Q & A" : "Poll Type",
         });
-        setQuestions(response?.data?.quiz?.questions || []);
-        console.log(response?.data?.quiz?.questions);
+        setQuestions(quizData?.questions || []);
+        console.log(quizData?.questions);
       } catch (error) {
         console.log(error);
       }
@@ -151,47 +160,54 @@ const CreateQuiz = () => {
   }, []);
 
   return (
+    <>
+    {loading && <Loader/>}
     <div className={styles.createQuiz}>
-      <form onSubmit={handleSubmit}>
-        {!next && !edit ? (
-          <AddQuestion
-            handleQuizTypeChange={handleQuizTypeChange}
-            questions={quizDetails}
-            setQuestions={setQuizDetails}
-            errors={errors}
-          />
-        ) : (
-          <AddQuiz
-            quizDetails={quizDetails}
-            handleSubmit={handleSubmit}
-            questions={questions}
-            setQuestions={setQuestions}
-            errors={errors}
-            isSubmitted={isSubmitted}
-            currentQuestionIndex={currentQuestionIndex}
-            setCurrentQuestionIndex={setCurrentQuestionIndex}
-          />
-        )}
-        <div className={styles.btnsWrp}>
-          <button type="button" onClick={() => closeModal()}>
-            Cancel
-          </button>
-          {!next ? (
-            <button
-              type="button"
-              className={styles.nextBtn}
-              onClick={handleNext}
-            >
-              Next
-            </button>
+      {viewLink && result ? (
+        <CopyLink type={result?.category} id={result?._id} />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {!next && !edit ? (
+            <AddQuestion
+              handleQuizTypeChange={handleQuizTypeChange}
+              questions={quizDetails}
+              setQuestions={setQuizDetails}
+              errors={errors}
+            />
           ) : (
-            <button type="submit">
-              {edit ? "Update Quiz" : "Create Quiz"}
-            </button>
+            <AddQuiz
+              quizDetails={quizDetails}
+              handleSubmit={handleSubmit}
+              questions={questions}
+              setQuestions={setQuestions}
+              errors={errors}
+              isSubmitted={isSubmitted}
+              currentQuestionIndex={currentQuestionIndex}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
+            />
           )}
-        </div>
-      </form>
+          <div className={styles.btnsWrp}>
+            <button type="button" onClick={() => closeModal()}>
+              Cancel
+            </button>
+            {!next && !edit ? (
+              <button
+                type="button"
+                className={styles.nextBtn}
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            ) : (
+              <button type="submit">
+                {edit ? "Update Quiz" : "Create Quiz"}
+              </button>
+            )}
+          </div>
+        </form>
+      )}
     </div>
+    </>
   );
 };
 

@@ -38,6 +38,9 @@
   border-radius: 0.3rem;
   cursor: pointer;
 }
+.quizTypeButton:hover{
+  box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
+}
 .btnsWrp {
   display: flex;
   align-items: center;

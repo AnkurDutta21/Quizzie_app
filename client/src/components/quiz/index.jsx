@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import Loader from "../common/loader";
+import { successToast } from "../../utils/showToast";
 
 const AttemptQuiz = ({isQuiz}) => {
   console.log(isQuiz,'pppppppppp')
@@ -26,8 +27,9 @@ const AttemptQuiz = ({isQuiz}) => {
         }else{
           setQuiz(response?.data?.poll)
         }
+        successToast(response?.message)
       } catch (error) {
-        console.log(error);
+        errorToast(error?.response?.data?.error)
       }
     };
     getQuiz();
@@ -72,17 +74,12 @@ const AttemptQuiz = ({isQuiz}) => {
     navigate(`/${quizOrPoll}/results`,{ state: { results,quizId,isQuiz } })
   };
 
-  if (!quiz) {
-    return <div>Loading...</div>;
-  }
-
   const currentQuestion = quiz?.questions[index];
-console.log(currentQuestion)
   return (
     <>
       {loading && <Loader />}
       <div className={styles.quizAttemptContainer}>
-      <div className={styles.meta}>
+      <div className={styles.quizWrp}>
         <p className={styles.count}>
           {index + 1}/{quiz?.questions?.length}
         </p>
@@ -96,7 +93,7 @@ console.log(currentQuestion)
           <div
             key={i}
             onClick={() => handleSelect(i)}
-            className={`${selected === i ? styles.selected : ""} ${styles.option}`}
+            className={`${selected === i ? styles.selected : styles.item} ${styles.option}`}
           >
             {item.text && <div>{item.text}</div>}
             {item.image && (

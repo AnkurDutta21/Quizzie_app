@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import StatusCard from '../../components/dashboard/statusCard';
 import { formatDate } from '../../utils/formatDate';
 import Loader from '../../components/common/loader';
+import { successToast } from '../../utils/showToast';
 
 const QuizAnalysis = () => {
   const { quizId } = useParams(); 
@@ -16,10 +17,9 @@ const QuizAnalysis = () => {
       try {
         const response = await getApiData(URL + ENDPOINTS.QUIZANALYSIS + quizId);
         setQuizData(response?.data?.quizAnalysisData); 
-        console.log(response, '[[[');
-        console.log(quizData, 'pppp');
+        successToast(response?.message)
       } catch (error) {
-        console.error('Error fetching quiz data:', error);
+        errorToast(error?.response?.data?.error)
       }
     };
     apiData();

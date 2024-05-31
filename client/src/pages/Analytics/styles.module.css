@@ -1,74 +1,77 @@
-.container {
-  }
-  .analyticsWrp{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .heading {
-    text-align: center;
-    color: #2d50ef;
-  }
-  
-  .table {
-   max-width: fit-content;
-    border-collapse: separate; 
-    border-spacing: 0rem;
-    margin: 1.5rem 0;
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    text-wrap: nowrap;
-  }
-  
-  .table th, .table td {
-    padding: 0.75rem 2rem;
-    text-align: center;
-  }
-  
-  .table th {
-    background-color: #2d50ef;
-    color: white;
-  }
-  
-  .table tr:nth-child(even) {
-    background: #B3C4FF;
-  }
-  
-  .table tr:nth-child(odd) {
-    background: #EDEDED;
+ .container {
+  font-family: Arial, sans-serif;
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
 
-  }
-  
-  .icon {
-    margin: 0 0.5rem;
-    cursor: pointer;
-  }
-  
-  .icon i {
-    color: #ff0000;
-  }
-  
-  .icon i:hover {
-    color: #d00000;
-  }
-  
-  .detailsLink {
-    text-decoration: none;
-    color: #2d50ef;
-  }
-  
-  .detailsLink:hover {
-    text-decoration: underline;
-  }
-.iconWrp{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
-.rounded{
-    border: 0.8rem;
-}
-.roundedDiv{
+
+.heading {
+  text-align: center;
+  color: #5076ff;
+  font-family: Poppins;
+  font-size: 70px;
+  font-weight: 900;
   
 }
+.table{
+  min-width: fit-content;
+}
+.tableHeader {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1fr 2fr;
+  background-color:  #5076FF;
+  padding: 1rem 1rem;
+  font-weight: bold;
+  border-radius:0.6rem;
+  gap: 2rem;
+  text-wrap:nowrap;
+  justify-items: center;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1fr 2fr;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-wrap: nowrap;
+  gap: 2rem;
+  justify-items: center;
+  
+}
+.name{
+
+    width: 8rem; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.tableRow > span{
+  text-wrap: nowrap;
+}
+.tableRow:nth-child(even) {
+  background: #EDEDED;
+  border-radius:0.6rem;
+}
+.tableRow:nth-child(odd) {
+  background: #B3C4FF;
+    border-radius:0.6rem;
+
+}
+.icon {
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+.icon:hover{
+  box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
+}
+.statsLink {
+  color: #1a73e8;
+  text-decoration: none;
+  cursor: pointer;
+  text-wrap: nowrap;
+}
+

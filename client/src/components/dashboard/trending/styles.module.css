@@ -1,56 +1,57 @@
 .container {
-    margin-top: 4rem;
-  }
-  
-  .quizCards {
-    margin-top: 1.5rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    max-width: fit-content;
-  }
-  
-  .card {
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    grid-gap: 1rem;
-    cursor: pointer;
-    transition: all 100ms ease-in-out;
-    max-width: fit-content;
-  }
-  
-  .card:active {
-    transform: scale(0.98);
-  }
-  
-  .card > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    width: 10ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  
-  .impressions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    color: #ff5d01;
-  }
-  
-  .date {
-    color: #60b84b;
-  }
-  
+  margin-top: 4rem;
+}
+
+.quizCards {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  max-width: fit-content;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-gap: 1rem;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+  max-width: fit-content;
+}
+.card:hover {
+  box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
+}
+.card:active {
+  transform: scale(0.98);
+}
+
+.card > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 10ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.impressions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #ff5d01;
+}
+
+.date {
+  color: #60b84b;
+}

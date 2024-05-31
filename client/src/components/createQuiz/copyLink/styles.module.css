@@ -1,0 +1,31 @@
+.results {
+    text-align: center;
+  }
+  
+  .results > * {
+    margin-top: 1rem;
+  }
+  
+  .results p {
+    padding: 1rem;
+     background: #EDEDED;
+    border-radius: 0.3rem;
+  }
+  .shareBtn{
+    background: #60B84B;
+    outline: 0;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: #fff;
+    box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+    white-space: pre-line;
+  }
+  .shareBtn:hover {
+    background-color: #66b153;
+    box-shadow: 0 6px 20px rgba(84, 43, 250, 0.23);
+  }

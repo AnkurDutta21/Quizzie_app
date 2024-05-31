@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import StatusCard from '../../components/dashboard/statusCard';
 import { formatDate } from '../../utils/formatDate';
 import Loader from '../../components/common/loader';
+import { errorToast, successToast } from '../../utils/showToast';
 
 const PollAnalysis = () => {
   const { pollId } = useParams(); 
@@ -16,10 +17,9 @@ const PollAnalysis = () => {
       try {
         const response = await getApiData(URL + ENDPOINTS.POLLANALYSIS + pollId);
         setPollData(response?.data?.pollAnalysisData); 
-        console.log(response, '[[[');
-        console.log(pollData, 'pppp');
+    successToast(response?.message)
       } catch (error) {
-        console.error('Error fetching poll data:', error);
+        errorToast(error?.response?.data?.error)
       }
     };
     apiData();

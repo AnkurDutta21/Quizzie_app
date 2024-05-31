@@ -9,12 +9,12 @@
   min-height: 70vh;
 }
 
-.meta {
+.quizWrp {
     display: flex;
     justify-content: space-between;
   }
   
-  .meta p {
+  .quizWrp p {
     font-size: 1.5rem;
     font-weight: 500;
     text-align: left;
@@ -61,6 +61,9 @@
     gap: 1rem;
     grid-template-columns: 1fr;
   }
+  .item:hover{
+    box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
+  }
   .quizBtn{
     outline: 0;
     width: fit-content;
@@ -77,6 +80,11 @@
      position: relative;
     left: 50%;
     transform: translateX(-50%);
+  }
+  .quizBtn:hover{
+      background-color: #66b153;
+      color: white;
+      box-shadow: 0 4px 14px 0 rgba(50, 132, 35, 0.361);
   }
   @media (min-width: 768px) {
     .options{

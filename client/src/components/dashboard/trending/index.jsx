@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import styles from "./styles.module.css";
 import { formatDate } from "../../../utils/formatDate";
+import { copyLink } from "../../../utils/CopyLink";
 const Trending = ({icon,list}) => {
 
-  
   const trendingArray = Array.isArray(list) ? list : Object.values(list);
 
   return (
@@ -15,7 +15,7 @@ const Trending = ({icon,list}) => {
           {trendingArray?.map((item,index) => (
             <div
               type="button"
-            //   onClick={() => copyLink(el._id, el.category)}
+              onClick={() => copyLink(trendingArray.id, trendingArray.type)} 
               key={item._id}
               className={styles.card}
             >

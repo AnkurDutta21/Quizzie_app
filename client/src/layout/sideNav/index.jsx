@@ -34,6 +34,7 @@ const SideNav = () => {
       const response = await postApiData(URL+ENDPOINTS.LOGOUT)
       if(response){
         localStorage.removeItem('Token')
+        window.location.reload();
       }
       successToast(response.message)
     } catch (error) {

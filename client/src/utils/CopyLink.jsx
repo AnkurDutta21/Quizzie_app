@@ -20,3 +20,9 @@ export const copyLink = (id,type) => {
       }
 
 }
+export const getLink = (id, type) => {
+  const url = new URL(window.location.href);
+  url.pathname = `/${type}/${id}`;
+  const modifiedUrl = url.href;
+  return modifiedUrl;
+};
