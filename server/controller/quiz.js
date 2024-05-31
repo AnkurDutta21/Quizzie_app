@@ -82,7 +82,7 @@ const deleteQuiz = async (req, res, next) => {
 
     const quiz = await Quiz.findOneAndDelete({
       _id: id,
-      createdBy: req.user._id,
+      createdBy: req.user,
     });
 
     if (!quiz) {
@@ -144,14 +144,11 @@ const attemptQuiz = async (req, res, next) => {
 
 const updateQuiz = async (req, res, next) => {
   try {
-    const { quizName, questions, timer } = req.body;
+    const { quizName, questions } = req.body;
     const { id } = req.params;
 
     if (!quizName) {
       return next(createError(400, QUIZ_NAME_REQUIRED));
-    }
-    if (!timer) {
-      return next(createError(400, QUIZ_TIMER_REQUIRED));
     }
     if (!questions) {
       return next(createError(400, QUESTIONS_REQUIRED));
@@ -170,9 +167,9 @@ const updateQuiz = async (req, res, next) => {
     const quiz = await Quiz.findOneAndUpdate(
       {
         _id: id,
-        createdBy: req.user._id,
+        createdBy: req.user,
       },
-      { quizName, questions, timer },
+      { quizName, questions},
       { new: true }
     );
 

@@ -10,6 +10,7 @@ module.exports = {
     USER_CREATED: "user created successfully",
     USER_EDITED: "user edited successfully",
     INVALID_PASSWORD: "Inavlid Password",
+    USER_LOGGED_OUT:'user logged out successfully',
     // OTP_SENT: "otp sent successfully",
     // OTP_VERIFIED: "otp verified successfully",
     // OTP_NOT_VERIFIED: "otp not verified",

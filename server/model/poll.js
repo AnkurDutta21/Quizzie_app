@@ -20,7 +20,7 @@ const questionSchema = new mongoose.Schema({
   },
   optionsType: {
     type: String,
-    enum: ['text', 'image', 'textAndImage'],
+    enum: ["Text", "Image URL", "Text & Image URL"],
     required: true
   },
   options: {

@@ -89,5 +89,12 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+const logout = async (req, res, next) => {
+  try {
+    return successResponse(res, 200, messageHelper.USER_LOGGED_OUT);
+  } catch (error) {
+    next(error);
+  }
+};
 
-module.exports = { login, register };
+module.exports = { login, register, logout };

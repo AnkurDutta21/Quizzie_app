@@ -182,6 +182,7 @@ const getPollAnalysis = async (req, res, next) => {
     await poll.save();
 
     const pollAnalysisData = {
+      pollName:poll.pollName,
       createdAt: poll.createdAt,
       impressions: poll.impressions,
       questions: poll.questions.map(question => ({
