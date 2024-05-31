@@ -1,9 +1,9 @@
 import React from 'react'
 import AttemptQuiz from '../../components/quiz'
 
-const QuizPage = () => {
+const QuizPage = ({isQuiz}) => {
   return (
-    <AttemptQuiz/>
+    <AttemptQuiz isQuiz={isQuiz}/>
   )
 }
 

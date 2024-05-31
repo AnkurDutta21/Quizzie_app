@@ -9,7 +9,6 @@ const MainContainer = ({ children }) => {
       <div className={styles.mainContainer}>
         <SideNav />
         <div className={styles.mainContainerWrp}>{children}</div>
-        <Modal/>
       </div>
     </>
   );

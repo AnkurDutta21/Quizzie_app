@@ -4,8 +4,12 @@ import useFetchData from "../../hooks/useFetchData";
 import { URL, ENDPOINTS } from "../../utils/apiService";
 import Loader from "../common/loader";
 import { errorToast, successToast } from "../../utils/showToast";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../../hooks/useModalContext";
 
 const Auth = () => {
+  const navigate = useNavigate()
+  const {closeModal} = useModal()
   const { postApiData, loading, error } = useFetchData();
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
@@ -55,6 +59,8 @@ const Auth = () => {
           localStorage.setItem("Token", data?.data?.token);
         }
         successToast(data?.message)
+        closeModal()
+        navigate('/')
       } catch (error) {
         errorToast(error?.response?.data?.error)
       }

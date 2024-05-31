@@ -7,7 +7,7 @@ import { useModal } from '../../../hooks/useModalContext';
 
 const Modal = () => {
   const {modalState} = useModal()
-  console.log(modalState.modalType,'ppppfrom modal')
+  console.log(modalState,'ppppfrom modal')
   const renderComponent = () => {
     switch (modalState.modalType) {
       case 'AUTH':

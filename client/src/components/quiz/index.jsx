@@ -6,7 +6,8 @@ import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import Loader from "../common/loader";
 
-const AttemptQuiz = () => {
+const AttemptQuiz = ({isQuiz}) => {
+  console.log(isQuiz,'pppppppppp')
   const navigate = useNavigate();
   const { quizId } = useParams();
   const { getApiData,loading, error } = useFetchData();
@@ -18,8 +19,13 @@ const AttemptQuiz = () => {
   useEffect(() => {
     const getQuiz = async () => {
       try {
-        const response = await getApiData(URL + ENDPOINTS.GETQUIZ + quizId);
-        setQuiz(response?.data?.quiz);
+        const endpoints = isQuiz ? ENDPOINTS.GETQUIZ :ENDPOINTS.GETPOLL
+        const response = await getApiData(URL + endpoints + quizId);
+        if(isQuiz){
+          setQuiz(response?.data?.quiz);
+        }else{
+          setQuiz(response?.data?.poll)
+        }
       } catch (error) {
         console.log(error);
       }
@@ -29,10 +35,11 @@ const AttemptQuiz = () => {
 
   const handleIndex = () => {
     if (index >= quiz.questions.length - 1) {
-      submitAnswers(results).then(() => navigate('/quiz/results',{ state: { results,quizId } }));
+      const quizOrPoll = isQuiz ? 'quiz' : 'poll'
+      submitAnswers(results).then(() => navigate(`/${quizOrPoll}/results`,{ state: { results,quizId,isQuiz } }));
     } else {
       setIndex((prev) => prev + 1);
-      setSelected(null); // Reset selected state
+      setSelected(null);
     }
   };
 
@@ -60,8 +67,9 @@ const AttemptQuiz = () => {
   };
 
   const submitAnswers = async () => {
-    console.log(results);
-    navigate('/quiz/results',{ state: { results,quizId } })
+    console.log(results,isQuiz,'sdsdsdsd');
+    const quizOrPoll = isQuiz ? 'quiz' : 'poll'
+    navigate(`/${quizOrPoll}/results`,{ state: { results,quizId,isQuiz } })
   };
 
   if (!quiz) {
@@ -69,17 +77,18 @@ const AttemptQuiz = () => {
   }
 
   const currentQuestion = quiz?.questions[index];
-
+console.log(currentQuestion)
   return (
     <>
       {loading && <Loader />}
+      <div className={styles.quizAttemptContainer}>
       <div className={styles.meta}>
         <p className={styles.count}>
           {index + 1}/{quiz?.questions?.length}
         </p>
       </div>
       <p className={styles.question}>{currentQuestion?.question}</p>
-      {currentQuestion?.timer && (
+      {currentQuestion?.timer && isQuiz && (
         <Timer key={index} timer={currentQuestion.timer} onTimerEnd={handleIndex} />
       )}
       <div className={styles.options}>
@@ -101,6 +110,7 @@ const AttemptQuiz = () => {
       <button className={styles.quizBtn} onClick={handleIndex}>
         {index >= quiz?.questions?.length - 1 ? "Submit" : "Next"}
       </button>
+      </div>
     </>
   );
 };

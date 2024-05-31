@@ -12,7 +12,6 @@ const AddQuiz = ({
   quizDetails,
 }) => {
 
-console.log(errors,'234567890-')
 
   const handleQuestionChange = (event) => {
     const { name, value } = event.target;
@@ -30,7 +29,7 @@ console.log(errors,'234567890-')
 
   const handleCorrectAnswerChange = (index) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].correctAnswerIndex = index;
+    newQuestions[currentQuestionIndex].answer = index;
     setQuestions(newQuestions);
   };
 
@@ -41,7 +40,7 @@ console.log(errors,'234567890-')
       newQuestions[currentQuestionIndex].options.push({
         id: newOptionId,
         text: "",
-        url: "",
+        image: "",
       });
       setQuestions(newQuestions);
     }
@@ -61,11 +60,11 @@ console.log(errors,'234567890-')
         ...questions,
         {
           question: "",
-          optionType: "",
-          correctAnswerIndex: 0,
+          optionsType: "",
+          answer: 0,
           options: [
-            { id: 1, text: "", url: "" },
-            { id: 2, text: "", url: "" },
+            { id: 1, text: "", image: "" },
+            { id: 2, text: "", image: "" },
           ],
           timer: 0,
         },
@@ -93,7 +92,7 @@ console.log(errors,'234567890-')
 
   const handleOptionTypeChange = (type) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].optionType = type;
+    newQuestions[currentQuestionIndex].optionsType = type;
     setQuestions(newQuestions);
   };
 
@@ -101,7 +100,7 @@ console.log(errors,'234567890-')
     setCurrentQuestionIndex(index);
   };
 
-  const optionType = ["Text", "Image URL", "Text & Image URL"];
+  const optionsType = ["Text", "Image URL", "Text & Image URL"];
   const timers = [
     { label: "OFF", value: 0 },
     { label: "5 sec", value: 5000 },
@@ -153,12 +152,12 @@ console.log(errors,'234567890-')
           )}
           <div className={styles.optionTypesWrp}>
             <label>Option Type:</label>
-            {optionType.map((type, index) => (
+            {optionsType.map((type, index) => (
               <div key={index} className={styles.optionType}>
                 <input
                   type="radio"
                   name={`optionType-${currentQuestionIndex}`}
-                  checked={questions?.[currentQuestionIndex]?.optionType === type}
+                  checked={questions?.[currentQuestionIndex]?.optionsType === type}
                   onChange={() => handleOptionTypeChange(type)}
                 />
                 <label>{type}</label>
@@ -177,19 +176,19 @@ console.log(errors,'234567890-')
                       type="radio"
                       name={`correctAnswer-${currentQuestionIndex}`}
                       checked={
-                        questions?.[currentQuestionIndex]?.correctAnswerIndex ===
+                        questions?.[currentQuestionIndex]?.answer ===
                         optionIndex
                       }
                       onChange={() => handleCorrectAnswerChange(optionIndex)}
                       className={`${
-                        questions?.[currentQuestionIndex]?.correctAnswerIndex ===
+                        questions?.[currentQuestionIndex]?.answer ===
                         optionIndex && quizDetails?.quizType !== "Poll Type"
                           ? styles.correctOptionRadio
                           : ""
                       }`}
                     />
                   )}
-                  {questions?.[currentQuestionIndex]?.optionType !==
+                  {questions?.[currentQuestionIndex]?.optionsType !==
                     "Image URL" && (
                     <input
                       type="text"
@@ -199,26 +198,26 @@ console.log(errors,'234567890-')
                         handleOptionChange(optionIndex, e, "text")
                       }
                       className={`${
-                        questions?.[currentQuestionIndex]?.correctAnswerIndex ===
+                        questions?.[currentQuestionIndex]?.answer ===
                           optionIndex && quizDetails?.quizType !== "Poll Type"
                           ? styles.correctOptionInput
                           : ""
                       }`}
                     />
                   )}
-                  {(questions?.[currentQuestionIndex]?.optionType ===
+                  {(questions?.[currentQuestionIndex]?.optionsType ===
                     "Image URL" ||
-                    questions?.[currentQuestionIndex]?.optionType ===
+                    questions?.[currentQuestionIndex]?.optionsType ===
                       "Text & Image URL") && (
                     <input
                       type="text"
                       placeholder="URL"
-                      value={option?.url ?? ""}
+                      value={option?.image ?? ""}
                       onChange={(e) =>
-                        handleOptionChange(optionIndex, e, "url")
+                        handleOptionChange(optionIndex, e, "image")
                       }
                       className={`${
-                        questions?.[currentQuestionIndex]?.correctAnswerIndex ===
+                        questions?.[currentQuestionIndex]?.answer ===
                           optionIndex && quizDetails?.quizType !== "Poll Type"
                           ? styles.correctOptionInput
                           : ""

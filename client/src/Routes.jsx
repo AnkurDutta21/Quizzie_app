@@ -8,21 +8,17 @@ import QuizViewer from "./layout/quizViewer";
 import QuizPage from "./pages/quiz";
 import QuizResults from "./pages/QuizResults";
 import PollAnalysis from "./pages/pollAnalysis";
+import ProtectedRoutes from "./utils/protectedRoutes";
 
 const routes = [
   {
     path: "/",
     element: (
-      <MainContainer>
-        <Home />
-      </MainContainer>
-    ),
-  },{
-    path: "/dashboard",
-    element: (
+      <ProtectedRoutes>
       <MainContainer>
         <Dashboard />
       </MainContainer>
+      </ProtectedRoutes>
     ),
   },{
     path: "/analytics",
@@ -52,12 +48,28 @@ const routes = [
     path: "/quiz/:quizId",
     element: (
       <QuizViewer>
-        <QuizPage/>
+        <QuizPage isQuiz={true}/>
+      </QuizViewer>
+    ),
+  },
+  {
+    path: "/poll/:quizId",
+    element: (
+      <QuizViewer>
+        <QuizPage isQuiz={false}/>
       </QuizViewer>
     ),
   },
   {
     path: "/quiz/results",
+    element: (
+      <QuizViewer>
+        <QuizResults/>
+      </QuizViewer>
+    ),
+  },
+  {
+    path: "/poll/results",
     element: (
       <QuizViewer>
         <QuizResults/>

@@ -1,4 +1,21 @@
-.score{
-    color:#60B84B;
-    letter-spacing: 3px;
+.score {
+  color: #60b84b;
+  letter-spacing: 3px;
+}
+.main {
+  font-weight: 700;
+  font-size: 3rem;
+  height: 100%;
+  width: 50%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .main {
+    font-size: 4rem;
+  }
 }

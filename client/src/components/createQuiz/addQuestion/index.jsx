@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 const AddQuestion = ({ questions, setQuestions, handleQuizTypeChange, errors }) => {
 
   const quizTypes = ["Q & A", "Poll Type"];
-
+console.log(errors,'123456ttttttt')
   const handleQuizNameChange = (e) => {
     setQuestions({ ...questions, quizName: e.target.value });
   };

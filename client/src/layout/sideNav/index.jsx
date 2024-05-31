@@ -16,7 +16,7 @@ const SideNav = () => {
     setSelected(option);
     switch (option) {
       case "Dashboard":
-        navigate("/dashboard");
+        navigate("/");
         break;
       case "Analytics":
         navigate("/analytics");
