@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
 import MainContainer from "./layout/mainContainer";
 import Dashboard from "./pages/Dashboard";
 import QuizAnalysis from "./pages/quizAnalysis";
