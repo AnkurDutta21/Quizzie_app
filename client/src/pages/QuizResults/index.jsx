@@ -29,7 +29,6 @@ const QuizResults = () => {
       attemptQuiz();
     }
   }, [quizId, results, attemptQuiz]);
-  console.log(isQuiz, 'qwertyu')
   return (
     <div>
       {loading && <Loader />}

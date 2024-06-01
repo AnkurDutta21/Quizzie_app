@@ -49,7 +49,7 @@ const PollAnalysis = () => {
                   <StatusCard
                     key={el._id}
                     number={el.votes}
-                    text={el?.text || 'Option' + " " + index}
+                    text={el?.text || 'Option' + " " + (index+1)}
                   />
                 ))}
               </div>

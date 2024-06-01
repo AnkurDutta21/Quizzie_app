@@ -11,8 +11,6 @@ const AddQuiz = ({
   setCurrentQuestionIndex,
   quizDetails,
 }) => {
-
-
   const handleQuestionChange = (event) => {
     const { name, value } = event.target;
     const newQuestions = [...questions];
@@ -147,8 +145,10 @@ const AddQuiz = ({
             value={questions?.[currentQuestionIndex]?.question ?? ""}
             onChange={handleQuestionChange}
           />
-          {isSubmitted && errors?.question && (
-            <div className={styles.error}>{errors.question}</div>
+          {isSubmitted && errors?.[currentQuestionIndex]?.question && (
+            <div className={styles.error}>
+              {errors[currentQuestionIndex].question}
+            </div>
           )}
           <div className={styles.optionTypesWrp}>
             <label>Option Type:</label>
@@ -163,80 +163,96 @@ const AddQuiz = ({
                 <label>{type}</label>
               </div>
             ))}
-              </div>
-            {isSubmitted && errors?.optionsType && (
-                <div className={styles.error}>{errors.optionsType}</div>
-              )}
+          </div>
+          {isSubmitted && errors?.[currentQuestionIndex]?.optionsType && (
+            <div className={styles.error}>
+              {errors[currentQuestionIndex].optionsType}
+            </div>
+          )}
           <div className={styles.optionsWrp}>
             {questions?.[currentQuestionIndex]?.options.map(
               (option, optionIndex) => (
-                <div key={option.id} className={styles.optionContainer}>
-                  {quizDetails?.quizType !== "Poll Type" && (
-                    <input
-                      type="radio"
-                      name={`correctAnswer-${currentQuestionIndex}`}
-                      checked={
-                        questions?.[currentQuestionIndex]?.answer ===
-                        optionIndex
-                      }
-                      onChange={() => handleCorrectAnswerChange(optionIndex)}
-                      className={`${
-                        questions?.[currentQuestionIndex]?.answer ===
-                        optionIndex && quizDetails?.quizType !== "Poll Type"
-                          ? styles.correctOptionRadio
-                          : ""
-                      }`}
-                    />
-                  )}
-                  {questions?.[currentQuestionIndex]?.optionsType !==
-                    "Image URL" && (
-                    <input
-                      type="text"
-                      placeholder="Text"
-                      value={option?.text ?? ""}
-                      onChange={(e) =>
-                        handleOptionChange(optionIndex, e, "text")
-                      }
-                      className={`${
-                        questions?.[currentQuestionIndex]?.answer ===
-                          optionIndex && quizDetails?.quizType !== "Poll Type"
-                          ? styles.correctOptionInput
-                          : ""
-                      }`}
-                    />
-                  )}
-                  {(questions?.[currentQuestionIndex]?.optionsType ===
-                    "Image URL" ||
-                    questions?.[currentQuestionIndex]?.optionsType ===
-                      "Text & Image URL") && (
-                    <input
-                      type="text"
-                      placeholder="URL"
-                      value={option?.image ?? ""}
-                      onChange={(e) =>
-                        handleOptionChange(optionIndex, e, "image")
-                      }
-                      className={`${
-                        questions?.[currentQuestionIndex]?.answer ===
-                          optionIndex && quizDetails?.quizType !== "Poll Type"
-                          ? styles.correctOptionInput
-                          : ""
-                      }`}
-                    />
-                  )}
-                  {questions?.[currentQuestionIndex]?.options.length > 2 && (
-                    <button
-                      onClick={() => deleteOption(optionIndex)}
-                      className={styles.deleteButton}
-                    >
-                      <img src={del} alt="delete" />
-                    </button>
-                  )}
+                <div key={option.id} className={styles.optionFlex}>
+                  <div className={styles.optionContainer}>
+                    {quizDetails?.quizType !== "Poll Type" && (
+                      <input
+                        type="radio"
+                        name={`correctAnswer-${currentQuestionIndex}`}
+                        checked={
+                          questions?.[currentQuestionIndex]?.answer ===
+                          optionIndex
+                        }
+                        onChange={() => handleCorrectAnswerChange(optionIndex)}
+                        className={`${
+                          questions?.[currentQuestionIndex]?.answer ===
+                            optionIndex && quizDetails?.quizType !== "Poll Type"
+                            ? styles.correctOptionRadio
+                            : ""
+                        }`}
+                      />
+                    )}
+                    {questions?.[currentQuestionIndex]?.optionsType !==
+                      "Image URL" && (
+                      <input
+                        type="text"
+                        placeholder="Text"
+                        value={option?.text ?? ""}
+                        onChange={(e) =>
+                          handleOptionChange(optionIndex, e, "text")
+                        }
+                        className={`${
+                          questions?.[currentQuestionIndex]?.answer ===
+                            optionIndex && quizDetails?.quizType !== "Poll Type"
+                            ? styles.correctOptionInput
+                            : ""
+                        }`}
+                      />
+                    )}
+                    {(questions?.[currentQuestionIndex]?.optionsType ===
+                      "Image URL" ||
+                      questions?.[currentQuestionIndex]?.optionsType ===
+                        "Text & Image URL") && (
+                      <input
+                        type="text"
+                        placeholder="URL"
+                        value={option?.image ?? ""}
+                        onChange={(e) =>
+                          handleOptionChange(optionIndex, e, "image")
+                        }
+                        className={`${
+                          questions?.[currentQuestionIndex]?.answer ===
+                            optionIndex && quizDetails?.quizType !== "Poll Type"
+                            ? styles.correctOptionInput
+                            : ""
+                        }`}
+                      />
+                    )}
+                    <br />
+                    {questions?.[currentQuestionIndex]?.options.length > 2 &&
+                      optionIndex > 1 && (
+                        <button
+                          onClick={() => deleteOption(optionIndex)}
+                          className={styles.deleteButton}
+                        >
+                          <img src={del} alt="delete" />
+                        </button>
+                      )}
+                  </div>
+                  {isSubmitted &&
+                    errors?.[currentQuestionIndex]?.options?.[optionIndex] && (
+                      <div
+                        className={`${styles.error} ${styles.absoluteErrors}`}
+                      >
+                        {Object.values(
+                          errors[currentQuestionIndex].options[optionIndex]
+                        ).join(", ")}
+                      </div>
+                    )}
                 </div>
               )
             )}
           </div>
-          {isSubmitted && errors?.options && (
+          {isSubmitted && errors?.[currentQuestionIndex]?.options && (
             <div className={styles.error}>{errors.options}</div>
           )}
           <button

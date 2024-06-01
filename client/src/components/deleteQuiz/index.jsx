@@ -8,7 +8,6 @@ const DeleteQuiz = () => {
 
   const handleDelete = async () => {
     if (onDelete) {
-      console.log(onDelete)
       await onDelete();
     }
   };

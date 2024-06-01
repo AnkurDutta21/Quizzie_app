@@ -5,11 +5,9 @@ import { copyLink } from "../../../utils/CopyLink";
 const Trending = ({icon,list}) => {
 
   const trendingArray = Array.isArray(list) ? list : Object.values(list);
-console.log(trendingArray,'lllll')
 
 
 const handleCopyLink = (id,type)=>{
-console.log(id,type,'khgd')
   copyLink(id,type)
 
 }

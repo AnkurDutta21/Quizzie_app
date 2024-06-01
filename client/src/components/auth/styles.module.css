@@ -1,101 +1,94 @@
 .auth {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-.auth h1{
-    margin-bottom: 2rem;
+.auth h1 {
+  margin-bottom: 2rem;
 }
 .authSwitch {
-    display: flex;
-    margin-bottom: 1.5rem;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .authSwitch button {
-    padding: 0.55rem 2.75rem;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: #000;
-  
-
+  padding: 0.55rem 2.75rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #000;
 }
 
 .authSwitch .active {
-    font-weight: bold;
-    box-shadow: 0px 0px 50px 0px #0019FF3D;
-    border-radius: 2.75rem;
+  font-weight: bold;
+  box-shadow: 0px 0px 50px 0px #0019ff3d;
+  border-radius: 2.75rem;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .inputGroup {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
 }
-.inputWrp{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-end;
-    gap: 1.4rem;
+.inputWrp {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 1.4rem;
 }
 label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
 .inputGroup input {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem 0.5rem 0rem 0rem;
-    background-color: #F4F4F4;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+  background-color: #f4f4f4;
 }
 
-.error {
-    border: 1px solid red;
-}
-
-.errorMessage {
-    color: red;
-    font-size: 0.875rem;
+.error::placeholder {
+  color: red;
 }
 
 .authSubmitBtn {
-    padding: 0.35rem 5.75rem;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    margin-top: 1rem;
+  padding: 0.35rem 5.75rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 1rem;
 }
-
+/* 
 @media (max-width: 600px) {
-    .authSwitch button {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
+  .authSwitch button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
 
-    input {
-        padding: 0.5rem;
-        font-size: 0.875rem;
-    }
+  input {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
 
-    .authSubmitBtn{
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-}
+  .authSubmitBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+} */

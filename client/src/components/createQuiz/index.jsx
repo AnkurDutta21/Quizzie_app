@@ -5,7 +5,6 @@ import AddQuestion from "./addQuestion";
 import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import { useModal } from "../../hooks/useModalContext";
-import { questionSchema, quizDetailsSchema } from "../../utils/validations";
 import CopyLink from "./copyLink";
 import { errorToast, successToast } from "../../utils/showToast";
 import Loader from "../common/loader";
@@ -41,49 +40,75 @@ const CreateQuiz = () => {
   const [result, setResult] = useState([]);
   const [viewLink, setViewLink] = useState(false);
 
-  const validateFields = async () => {
-    try {
-      await quizDetailsSchema.validate(quizDetails, { abortEarly: false });
-      setErrors({});
-      return true;
-    } catch (err) {
-      if (err.inner) {
-        const validationErrors = {};
-        err.inner.forEach((error) => {
-          validationErrors[error.path] = error.message;
-        });
-        setErrors(validationErrors);
-      } else {
-        console.error(err);
-      }
-      return false;
+
+// validations-----------------------------------
+
+  const validateFields = () => {
+    const errors = {};
+    if (!quizDetails.quizName.trim()) {
+      errors.quizName = "Quiz Name is required.";
     }
+    if (!quizDetails.quizType) {
+      errors.quizType = "Quiz Type is required.";
+    }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
-  const validateQuestion = async () => {
-    try {
-      await questionSchema.validate(questions[currentQuestionIndex], {
-        abortEarly: false,
+
+  const validateQuiz = (questions) => {
+    const errors = [];
+
+    questions.forEach((question, qIndex) => {
+      const questionErrors = {};
+
+      if (!question.question) {
+        questionErrors.question = "Question is required.";
+      }
+
+      if (!question.optionsType) {
+        questionErrors.optionsType = "Option type is required.";
+      }
+
+      const optionsErrors = [];
+      question.options.forEach((option, oIndex) => {
+        const optionErrors = {};
+        const optionType = question.optionsType;
+
+        if (optionType === "Text" || optionType === "Text & Image URL") {
+          if (!option.text) {
+            optionErrors.text = "Text is required.";
+          }
+        }
+
+        if (optionType === "Image URL" || optionType === "Text & Image URL") {
+          if (!option.image) {
+            optionErrors.image = "Image URL is required.";
+          }
+        }
+
+        if (Object.keys(optionErrors).length > 0) {
+          optionsErrors[oIndex] = optionErrors;
+        }
       });
-      setErrors({});
-      return true;
-    } catch (err) {
-      if (err.inner) {
-        const validationErrors = {};
-        err.inner.forEach((error) => {
-          validationErrors[error.path] = error.message;
-        });
-        setErrors(validationErrors);
-      } else {
-        console.error(err);
+
+      if (optionsErrors.length > 0) {
+        questionErrors.options = optionsErrors;
       }
-      return false;
-    }
+
+      if (Object.keys(questionErrors).length > 0) {
+        errors[qIndex] = questionErrors;
+      }
+    });
+
+    return errors;
   };
 
+
+  // --------------------------------------------------------------------------
   const handleNext = async (e) => {
     e.preventDefault();
-    if (await validateFields()) {
+    if (validateFields()) {
       setNext(true);
     }
   };
@@ -92,10 +117,14 @@ const CreateQuiz = () => {
     setQuizDetails({ ...quizDetails, quizType: type });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
-    if (await validateQuestion()) {
+    const errors = validateQuiz(questions);
+    if (errors.length > 0) {
+      setErrors(errors);
+    } else {
       const addQuizData = {
         [quizDetails.quizType === "Poll Type" ? "pollName" : "quizName"]:
           quizDetails.quizName,
@@ -117,7 +146,6 @@ const CreateQuiz = () => {
           : quizDetails.quizType === "Poll Type"
             ? URL + ENDPOINTS.CREATEPOLL
             : URL + ENDPOINTS.CREATE_QUIZ;
-
 
         const data = edit
           ? await patchApiData(endpoint, addQuizData)

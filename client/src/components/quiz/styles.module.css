@@ -1,10 +1,9 @@
 .quizAttemptContainer{
-  min-width: fit-content;
-  min-height: fit-content;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: normal;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
   min-height: 70vh;
 }
@@ -25,11 +24,12 @@
   }
   .option {
     border-radius: 0.5rem;
-    padding: 1rem 1rem;
+    padding: 0.7rem 0.7rem;
     background-color:#f2f2f2;
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
   }
   
   .option > div {
@@ -40,8 +40,15 @@
     padding: 0rem 0rem;
   }
   
+.textAbsolute{
+  color: #fff;
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  }
+  
   .image {
-    height: 8vh;
+    height: 11vh;
     border-radius: 7px;
     overflow: hidden;
   }

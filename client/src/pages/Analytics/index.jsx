@@ -21,7 +21,6 @@ const Analytics = () => {
       try {
         const response = await getApiData(URL + ENDPOINTS.ALLPOLLSANDQUIZES)
         setData(response?.data?.data)
-        console.log(data, 'from top')
         successToast(response?.message)
       } catch (error) {
         errorToast(error?.response?.data?.error)
@@ -30,7 +29,6 @@ const Analytics = () => {
     apiData()
   }, []);
   const handleDelete = async (id, type) => {
-    console.log("invoked")
     try {
       const endpoints = type === "quiz" ? ENDPOINTS.DELETE_QUIZ : ENDPOINTS.DELETEPOLL;
       const response = await deleteApiData(URL + endpoints + id);
