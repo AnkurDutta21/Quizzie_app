@@ -37,7 +37,7 @@
   }
 
   .text{
-    padding: 2rem 0rem;
+    padding: 0rem 0rem;
   }
   
   .image {
@@ -98,6 +98,9 @@
   @media (min-width: 768px) {
     .image {
       height: 16vh;;
+    }
+    .text{
+      padding: 2rem 0rem;
     }
   }
   
