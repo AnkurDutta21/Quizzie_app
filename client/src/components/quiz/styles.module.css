@@ -35,6 +35,10 @@
   .option > div {
     flex: 1;
   }
+
+  .text{
+    padding: 2rem 0rem;
+  }
   
   .image {
     height: 8vh;

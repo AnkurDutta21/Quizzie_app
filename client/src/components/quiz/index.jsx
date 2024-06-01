@@ -8,7 +8,6 @@ import Loader from "../common/loader";
 import { successToast } from "../../utils/showToast";
 
 const AttemptQuiz = ({isQuiz}) => {
-  console.log(isQuiz,'pppppppppp')
   const navigate = useNavigate();
   const { quizId } = useParams();
   const { getApiData,loading, error } = useFetchData();
@@ -86,7 +85,7 @@ const AttemptQuiz = ({isQuiz}) => {
       </div>
       <p className={styles.question}>{currentQuestion?.question}</p>
       {currentQuestion?.timer && isQuiz && (
-        <Timer key={index} timer={currentQuestion.timer} onTimerEnd={handleIndex} />
+        <Timer key={index} timer={currentQuestion.timer} onTimerEnd={handleIndex}/>
       )}
       <div className={styles.options}>
         {currentQuestion?.options?.map((item, i) => (
@@ -95,7 +94,7 @@ const AttemptQuiz = ({isQuiz}) => {
             onClick={() => handleSelect(i)}
             className={`${selected === i ? styles.selected : styles.item} ${styles.option}`}
           >
-            {item.text && <div>{item.text}</div>}
+            {item.text && <div className={styles.text}>{item.text}</div>}
             {item.image && (
               <div className={styles.image}>
                 <img src={item.image} alt="option" />

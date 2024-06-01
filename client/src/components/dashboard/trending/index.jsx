@@ -5,7 +5,14 @@ import { copyLink } from "../../../utils/CopyLink";
 const Trending = ({icon,list}) => {
 
   const trendingArray = Array.isArray(list) ? list : Object.values(list);
+console.log(trendingArray,'lllll')
 
+
+const handleCopyLink = (id,type)=>{
+console.log(id,type,'khgd')
+  copyLink(id,type)
+
+}
   return (
     <div className={styles.container}>
       <h2>Trending Quizzes</h2>
@@ -15,7 +22,7 @@ const Trending = ({icon,list}) => {
           {trendingArray?.map((item,index) => (
             <div
               type="button"
-              onClick={() => copyLink(trendingArray.id, trendingArray.type)} 
+              onClick={() => handleCopyLink(item?._id, item?.category)} 
               key={item._id}
               className={styles.card}
             >

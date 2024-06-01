@@ -20,7 +20,6 @@ export const questionSchema = Yup.object().shape({
     .of(optionSchema)
     .min(2, 'There must be at least two options')
     .test('optionsTest', 'Each option must have either text or URL', function (value) {
-      // Ensure each option passes the individual test
       const isValid = value.every(option => !!option.text || !!option.image);
       if (!isValid) {
         return this.createError({ path: 'options', message: 'Each option must have either text or URL' });
@@ -28,8 +27,7 @@ export const questionSchema = Yup.object().shape({
       return true;
     }),
   answer: Yup.number()
-    .min(0, "A correct answer must be selected.")
-    .required("A correct answer must be selected."),
+    .min(0, "A correct answer must be selected."),
   timer: Yup.number().min(0, "Timer must be a non-negative number."),
 });
 

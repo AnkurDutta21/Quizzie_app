@@ -11,11 +11,10 @@ import { errorToast, successToast } from "../../utils/showToast";
 import Loader from "../common/loader";
 
 const CreateQuiz = () => {
-  const { postApiData, patchApiData, getApiData,loading } = useFetchData();
+  const { postApiData, patchApiData, getApiData, loading } = useFetchData();
   const { closeModal, modalState } = useModal();
   const { modalData } = modalState;
   const { id, type, edit } = modalData;
-
 
   const [quizDetails, setQuizDetails] = useState({
     quizName: "",
@@ -39,8 +38,8 @@ const CreateQuiz = () => {
   const [next, setNext] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [result, setResult] = useState([])
-  const [viewLink, setViewLink] = useState(false)
+  const [result, setResult] = useState([]);
+  const [viewLink, setViewLink] = useState(false);
 
   const validateFields = async () => {
     try {
@@ -111,26 +110,25 @@ const CreateQuiz = () => {
           timer: question.timer,
         })),
       };
-      try {
 
+      try {
         const endpoint = edit
-          ? `${URL}${type === "quiz" ? ENDPOINTS.UPDATEQUIZ : ENDPOINTS.UPDATEPOLL
-          }${id}`
+          ? `${URL}${type === "quiz" ? ENDPOINTS.UPDATEQUIZ : ENDPOINTS.UPDATEPOLL}${id}`
           : quizDetails.quizType === "Poll Type"
             ? URL + ENDPOINTS.CREATEPOLL
             : URL + ENDPOINTS.CREATE_QUIZ;
+
 
         const data = edit
           ? await patchApiData(endpoint, addQuizData)
           : await postApiData(endpoint, addQuizData);
 
-
         const resultData = data?.data?.quiz || data?.data?.poll;
-        setResult(resultData)
-        setViewLink(true)
-        successToast(data.message)
+        setResult(resultData);
+        setViewLink(true);
+        successToast(data.message);
       } catch (error) {
-        errorToast(error?.response?.data?.error)
+        errorToast(error?.response?.data?.error);
       }
     }
   };
@@ -138,8 +136,7 @@ const CreateQuiz = () => {
   useEffect(() => {
     const editData = async () => {
       try {
-        const endpoint =
-          type === "quiz" ? ENDPOINTS.GETQUIZ : ENDPOINTS.GETPOLL;
+        const endpoint = type === "quiz" ? ENDPOINTS.GETQUIZ : ENDPOINTS.GETPOLL;
         const response = await getApiData(`${URL}${endpoint}${id}`);
         const quizData = type === "quiz" ? response?.data?.quiz : response?.data?.poll;
 
@@ -148,9 +145,10 @@ const CreateQuiz = () => {
           quizType: type === "quiz" ? "Q & A" : "Poll Type",
         });
         setQuestions(quizData?.questions || []);
-        console.log(quizData?.questions);
+        successToast(response?.message)
       } catch (error) {
-        console.log(error);
+        errorToast(error?.response?.data?.error)
+
       }
     };
 
@@ -161,52 +159,52 @@ const CreateQuiz = () => {
 
   return (
     <>
-    {loading && <Loader/>}
-    <div className={styles.createQuiz}>
-      {viewLink && result ? (
-        <CopyLink type={result?.category} id={result?._id} />
-      ) : (
-        <form onSubmit={handleSubmit}>
-          {!next && !edit ? (
-            <AddQuestion
-              handleQuizTypeChange={handleQuizTypeChange}
-              questions={quizDetails}
-              setQuestions={setQuizDetails}
-              errors={errors}
-            />
-          ) : (
-            <AddQuiz
-              quizDetails={quizDetails}
-              handleSubmit={handleSubmit}
-              questions={questions}
-              setQuestions={setQuestions}
-              errors={errors}
-              isSubmitted={isSubmitted}
-              currentQuestionIndex={currentQuestionIndex}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-            />
-          )}
-          <div className={styles.btnsWrp}>
-            <button type="button" onClick={() => closeModal()}>
-              Cancel
-            </button>
+      {loading && <Loader />}
+      <div className={styles.createQuiz}>
+        {viewLink && result ? (
+          <CopyLink type={result?.category} id={result?._id} />
+        ) : (
+          <form onSubmit={handleSubmit}>
             {!next && !edit ? (
-              <button
-                type="button"
-                className={styles.nextBtn}
-                onClick={handleNext}
-              >
-                Next
-              </button>
+              <AddQuestion
+                handleQuizTypeChange={handleQuizTypeChange}
+                questions={quizDetails}
+                setQuestions={setQuizDetails}
+                errors={errors}
+              />
             ) : (
-              <button type="submit">
-                {edit ? "Update Quiz" : "Create Quiz"}
-              </button>
+              <AddQuiz
+                quizDetails={quizDetails}
+                handleSubmit={handleSubmit}
+                questions={questions}
+                setQuestions={setQuestions}
+                errors={errors}
+                isSubmitted={isSubmitted}
+                currentQuestionIndex={currentQuestionIndex}
+                setCurrentQuestionIndex={setCurrentQuestionIndex}
+              />
             )}
-          </div>
-        </form>
-      )}
-    </div>
+            <div className={styles.btnsWrp}>
+              <button type="button" onClick={() => closeModal()}>
+                Cancel
+              </button>
+              {!next && !edit ? (
+                <button
+                  type="button"
+                  className={styles.nextBtn}
+                  onClick={handleNext}
+                >
+                  Next
+                </button>
+              ) : (
+                <button type="submit">
+                  {edit ? "Update Quiz" : "Create Quiz"}
+                </button>
+              )}
+            </div>
+          </form>
+        )}
+      </div>
     </>
   );
 };

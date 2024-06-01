@@ -62,7 +62,6 @@ const Auth = () => {
         closeModal()
         navigate('/')
       } catch (error) {
-        console.log(error,'sdsdsd')
         if(error?.response){
           errorToast(error?.response?.data?.error)
         }
