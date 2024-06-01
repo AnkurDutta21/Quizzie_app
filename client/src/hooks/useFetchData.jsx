@@ -16,6 +16,19 @@ const useFetchData = () => {
     return headers;
   };
 
+  const handleError = (err) => {
+    if (err.response) {
+      setError({
+        message: err.response.data.message || "Server responded with an error",
+        status: err.response.status,
+      });
+    } else if (err.request) {
+      setError({ message: "No response received from server" });
+    } else {
+      setError({ message: err.message });
+    }
+  };
+
   const getApiData = async (url) => {
     setLoading(true);
     setError(null);
@@ -23,7 +36,7 @@ const useFetchData = () => {
       const response = await axios.get(url, { headers: getHeaders() });
       return response.data;
     } catch (err) {
-      setError(err);
+      handleError(err);
       throw err;
     } finally {
       setLoading(false);
@@ -37,7 +50,7 @@ const useFetchData = () => {
       const response = await axios.post(url, data, { headers: getHeaders() });
       return response.data;
     } catch (err) {
-      setError(err);
+      handleError(err);
       throw err;
     } finally {
       setLoading(false);
@@ -52,7 +65,7 @@ const useFetchData = () => {
       const response = await axios.patch(url, data, { headers: getHeaders() });
       return response.data;
     } catch (err) {
-      setError(err);
+      handleError(err);
       throw err;
     } finally {
       setLoading(false);
@@ -66,7 +79,7 @@ const useFetchData = () => {
       const response = await axios.delete(url, { headers: getHeaders() });
       return response.data;
     } catch (err) {
-      setError(err);
+      handleError(err);
       throw err;
     } finally {
       setLoading(false);
