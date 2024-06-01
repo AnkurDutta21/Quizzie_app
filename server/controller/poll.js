@@ -13,6 +13,7 @@ const {
   QUESTION_OPTIONS_INVALID,
   OUT_OF_BOUND,
   POLL_ANALYSIS_FETCHED,
+  QUESTION_OPTIONS_REQUIRED,
 } = require("../utils/messageHelper");
 const { errorResponse, successResponse } = require("../utils/responseHelper");
 
@@ -62,8 +63,17 @@ const addPoll = async (req, res, next) => {
     }
 
     for (const question of questions) {
+      if (!question.options) {
+        return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
+      }
       if (question.options.length < 2 || question.options.length > 4) {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
+      }
+      for (const option of question.options) {
+        if ((!option.text || option.text.trim() === "") &&
+            (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        }
       }
     }
 
@@ -88,9 +98,19 @@ const updatePoll = async (req, res, next) => {
       return errorResponse(res, 400, MAX_QUESTIONS_EXCEEDED);
     }
 
+  
     for (const question of questions) {
+      if (!question.options) {
+        return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
+      }
       if (question.options.length < 2 || question.options.length > 4) {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
+      }
+      for (const option of question.options) {
+        if ((!option.text || option.text.trim() === "") &&
+            (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        }
       }
     }
 

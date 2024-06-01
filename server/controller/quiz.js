@@ -9,18 +9,19 @@ const {
   QUIZ_DELETED,
   QUIZ_UPDATED,
   QUIZ_NAME_REQUIRED,
-  QUIZ_TIMER_REQUIRED,
   QUESTIONS_REQUIRED,
   QUESTION_OPTIONS_INVALID,
   MAX_QUESTIONS_EXCEEDED,
-  QUIZ_ANALYSIS_FETCHED
+  QUIZ_ANALYSIS_FETCHED,
+  QUESTION_OPTION_EMPTY,
+  QUESTION_OPTIONS_REQUIRED
 } = require("../utils/messageHelper");
 const { successResponse, errorResponse, createError } = require("../utils/responseHelper");
 
 const addQuiz = async (req, res, next) => {
   try {
     const { quizName, questions } = req.body;
-      
+    
     if (!quizName) {
       return next(createError(400, QUIZ_NAME_REQUIRED));
     }
@@ -33,8 +34,17 @@ const addQuiz = async (req, res, next) => {
     }
   
     for (const question of questions) {
+      if (!question.options) {
+        return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
+      }
       if (question.options.length < 2 || question.options.length > 4) {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
+      }
+      for (const option of question.options) {
+        if ((!option.text || option.text.trim() === "") &&
+            (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        }
       }
     }
 
@@ -159,8 +169,17 @@ const updateQuiz = async (req, res, next) => {
     }
   
     for (const question of questions) {
+      if (!question.options) {
+        return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
+      }
       if (question.options.length < 2 || question.options.length > 4) {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
+      }
+      for (const option of question.options) {
+        if ((!option.text || option.text.trim() === "") &&
+            (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        }
       }
     }
 
