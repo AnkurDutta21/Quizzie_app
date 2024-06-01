@@ -18,7 +18,6 @@ const verifyToken = async (req, res, next) => {
   }
 
   try {
-    console.log('fere')
     const decodedToken = jwt.verify(token, secretKey)
     req.user = decodedToken.id;
     next();

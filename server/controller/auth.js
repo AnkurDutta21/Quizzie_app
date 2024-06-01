@@ -24,7 +24,6 @@ const register = async (req, res, next) => {
     }
 
     const existingUser = await User.findOne({ email });
-    console.log(existingUser);
     if (existingUser) {
       return errorResponse(res, 400, messageHelper.USER_EXIST);
     }
@@ -85,7 +84,6 @@ const login = async (req, res, next) => {
     );
 
   } catch (error) {
-    console.log(error)
     next(error);
   }
 };

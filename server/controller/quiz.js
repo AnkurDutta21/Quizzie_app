@@ -14,7 +14,10 @@ const {
   MAX_QUESTIONS_EXCEEDED,
   QUIZ_ANALYSIS_FETCHED,
   QUESTION_OPTION_EMPTY,
-  QUESTION_OPTIONS_REQUIRED
+  QUESTION_OPTIONS_REQUIRED,
+  TEXT_OPTION_EMPTY,
+  IMAGE_OPTION_EMPTY,
+  TEXT_IMAGE_OPTION_EMPTY
 } = require("../utils/messageHelper");
 const { successResponse, errorResponse, createError } = require("../utils/responseHelper");
 
@@ -33,6 +36,7 @@ const addQuiz = async (req, res, next) => {
       return errorResponse(res, 400, MAX_QUESTIONS_EXCEEDED);
     }
   
+    
     for (const question of questions) {
       if (!question.options) {
         return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
@@ -41,9 +45,14 @@ const addQuiz = async (req, res, next) => {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
       }
       for (const option of question.options) {
-        if ((!option.text || option.text.trim() === "") &&
-            (!option.image || option.image.trim() === "")) {
-          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        if (option.optionsType === "Text" && (!option.text || option.text.trim() === "")) {
+          return errorResponse(res, 400, TEXT_OPTION_EMPTY);
+        }
+        if (option.optionsType === "Image URL" && (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400, IMAGE_OPTION_EMPTY);
+        }
+        if (option.optionsType === "Text & Image URL" && (!option.text || option.text.trim() === "" || !option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400, TEXT_IMAGE_OPTION_EMPTY);
         }
       }
     }
@@ -168,6 +177,7 @@ const updateQuiz = async (req, res, next) => {
       return errorResponse(res, 400, MAX_QUESTIONS_EXCEEDED);
     }
   
+   
     for (const question of questions) {
       if (!question.options) {
         return errorResponse(res, 400, QUESTION_OPTIONS_REQUIRED);
@@ -176,9 +186,14 @@ const updateQuiz = async (req, res, next) => {
         return errorResponse(res, 400, QUESTION_OPTIONS_INVALID);
       }
       for (const option of question.options) {
-        if ((!option.text || option.text.trim() === "") &&
-            (!option.image || option.image.trim() === "")) {
-          return errorResponse(res, 400,QUESTION_OPTION_EMPTY);
+        if (option.optionsType === "Text" && (!option.text || option.text.trim() === "")) {
+          return errorResponse(res, 400, TEXT_OPTION_EMPTY);
+        }
+        if (option.optionsType === "Image URL" && (!option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400, IMAGE_OPTION_EMPTY);
+        }
+        if (option.optionsType === "Text & Image URL" && (!option.text || option.text.trim() === "" || !option.image || option.image.trim() === "")) {
+          return errorResponse(res, 400, TEXT_IMAGE_OPTION_EMPTY);
         }
       }
     }

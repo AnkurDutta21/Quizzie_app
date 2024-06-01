@@ -44,6 +44,9 @@ module.exports = {
     POLL_COMPLETE:'Poll attempted succesfully',
     POLL_UPDATED:'Poll updated succesfully',
     POLL_NAME_REQUIRED:'Poll name is required',
-    DATA_FETCHED:'Data fetched successfully'
+    DATA_FETCHED:'Data fetched successfully',
+    TEXT_OPTION_EMPTY:"text should not be empty",
+    IMAGE_OPTION_EMPTY:"Image URL should not be empty",
+    TEXT_IMAGE_OPTION_EMPTY:"text and Image URL should not be empty",
     
 }
