@@ -9,7 +9,7 @@ import Loader from '../../components/common/loader';
 
 const QuizResults = () => {
   const location = useLocation();
-  const { postApiData,loading } = useFetchData();
+  const { postApiData,loading,error } = useFetchData();
   const { results, quizId, isQuiz } = location.state || {};
   const [score, setScore] = useState({});
 
@@ -29,6 +29,8 @@ const QuizResults = () => {
       attemptQuiz();
     }
   }, [quizId, results, attemptQuiz]);
+
+
   return (
     <div>
       {loading && <Loader />}

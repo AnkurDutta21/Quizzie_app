@@ -31,7 +31,7 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
-if (error) {
+if (error ) {
   return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
 }
   return (

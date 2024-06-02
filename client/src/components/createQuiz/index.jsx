@@ -10,7 +10,7 @@ import { errorToast, successToast } from "../../utils/showToast";
 import Loader from "../common/loader";
 
 const CreateQuiz = () => {
-  const { postApiData, patchApiData, getApiData, loading } = useFetchData();
+  const { postApiData, patchApiData, getApiData, loading ,error } = useFetchData();
   const { closeModal, modalState } = useModal();
   const { modalData } = modalState;
   const { id, type, edit } = modalData;
@@ -184,6 +184,11 @@ const CreateQuiz = () => {
       editData();
     }
   }, []);
+
+
+if(error){
+errorToast(error?.message)
+}
 
   return (
     <>

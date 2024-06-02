@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModalContext";
-import useFetchData from "../../hooks/useFetchData";
-import { ENDPOINTS, URL } from "../../utils/apiService";
 import { errorToast, successToast } from "../../utils/showToast";
 
 const SideNav = () => {
   const navigate = useNavigate();
-  const {postApiData} = useFetchData()
   const {openModal} = useModal()
   const [selected, setSelected] = useState("");
 
@@ -30,16 +27,9 @@ const SideNav = () => {
   };
 
   const handleLogout = async()=>{
-    try {
-      const response = await postApiData(URL+ENDPOINTS.LOGOUT)
-      if(response){
         localStorage.removeItem('Token')
         window.location.reload();
-      }
-      successToast(response.message)
-    } catch (error) {
-      errorToast(error?.response?.data?.error)
-    }
+      successToast("Logged out succesfully")
   }
 
   return (
