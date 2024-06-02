@@ -7,9 +7,10 @@ import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import Loader from "../../components/common/loader";
 import { errorToast, successToast } from "../../utils/showToast";
+import ErrorPage from "../../components/errorPage";
 
 const Dashboard = () => {
-  const { getApiData, loading } = useFetchData();
+  const { getApiData, loading,error } = useFetchData();
 
   const [trendingData, setTrendingData] = useState([]);
 
@@ -30,7 +31,9 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
-
+if (error) {
+  return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
+}
   return (
     <>
       {loading && <Loader />}

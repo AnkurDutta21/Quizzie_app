@@ -7,10 +7,11 @@ import StatusCard from '../../components/dashboard/statusCard';
 import { formatDate } from '../../utils/formatDate';
 import Loader from '../../components/common/loader';
 import { errorToast, successToast } from '../../utils/showToast';
+import ErrorPage from '../../components/errorPage';
 
 const PollAnalysis = () => {
   const { pollId } = useParams(); 
-  const {getApiData,loading} = useFetchData();
+  const {getApiData,loading,error} = useFetchData();
   const [pollData, setPollData] = useState({}); 
   useEffect(() => {
     const apiData = async () => {
@@ -24,6 +25,10 @@ const PollAnalysis = () => {
     };
     apiData();
   }, [pollId]);
+
+  if (error) {
+    return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
+  }
 
   return(
     <>

@@ -7,10 +7,11 @@ import StatusCard from '../../components/dashboard/statusCard';
 import { formatDate } from '../../utils/formatDate';
 import Loader from '../../components/common/loader';
 import { successToast } from '../../utils/showToast';
+import ErrorPage from '../../components/errorPage';
 
 const QuizAnalysis = () => {
   const { quizId } = useParams(); 
-  const {getApiData,loading} = useFetchData();
+  const {getApiData,loading,error} = useFetchData();
   const [quizData, setQuizData] = useState({}); 
   useEffect(() => {
     const apiData = async () => {
@@ -24,6 +25,10 @@ const QuizAnalysis = () => {
     };
     apiData();
   }, [quizId]);
+
+  if (error) {
+    return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
+  }
 
   return(
     <>

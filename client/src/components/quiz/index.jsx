@@ -6,6 +6,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { ENDPOINTS, URL } from "../../utils/apiService";
 import Loader from "../common/loader";
 import { successToast } from "../../utils/showToast";
+import ErrorPage from "../errorPage";
 
 const AttemptQuiz = ({ isQuiz }) => {
   const navigate = useNavigate();
@@ -73,6 +74,11 @@ const AttemptQuiz = ({ isQuiz }) => {
   };
 
   const currentQuestion = quiz?.questions[index];
+
+  if (error) {
+    return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
+  }
+
   return (
     <>
       {loading && <Loader />}

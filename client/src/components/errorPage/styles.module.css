@@ -1,0 +1,39 @@
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem;
+    height: 100%;
+    text-align: center;
+    background-color: #f8f8f8;
+    color: #ff4c4c;
+  }
+  .errorImage {
+    width: 8rem; 
+    height: auto;
+    margin-bottom: 1rem; 
+  }
+  
+  .errorTitle {
+    font-size: 1.5rem; 
+    margin-bottom: 0.5rem;
+  }
+  
+  .errorMessage {
+    font-size: 1rem; 
+    margin: 0 1rem;
+  }
+  
+  @media (min-width: 768px) { 
+    .errorImage {
+        width: 12rem;
+      }
+    .errorTitle {
+      font-size: 2rem; 
+    }
+  
+    .errorMessage {
+      font-size: 1.2rem;
+    }
+  }

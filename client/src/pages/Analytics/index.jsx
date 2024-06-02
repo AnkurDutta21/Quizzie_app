@@ -11,6 +11,7 @@ import Loader from "../../components/common/loader";
 import { errorToast, successToast } from "../../utils/showToast";
 import { useModal } from "../../hooks/useModalContext";
 import { copyLink } from "../../utils/CopyLink"
+import ErrorPage from "../../components/errorPage";
 
 const Analytics = () => {
   const { getApiData, deleteApiData, loading, error } = useFetchData();
@@ -39,6 +40,11 @@ const Analytics = () => {
       errorToast(error?.response?.data?.error);
     }
   };
+
+  if (error) {
+    return <ErrorPage message={error?.message || "An unexpected error occurred"} />;
+  }
+
   return (
     <>
       {loading && <Loader />}
