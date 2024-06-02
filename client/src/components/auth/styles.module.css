@@ -61,7 +61,14 @@ label {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
   background-color: #f4f4f4;
 }
-
+.error{
+  border: 1px solid red;
+}
+.errorMessage{
+  font-size: 0.8rem;
+  text-align: left;
+  color: red;
+}
 .error::placeholder {
   color: red;
 }

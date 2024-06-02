@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModalContext";
 
 const Auth = () => {
-  const navigate = useNavigate()
-  const {closeModal} = useModal()
-  const { postApiData, loading, error } = useFetchData();
+  const navigate = useNavigate();
+  const { closeModal } = useModal();
+  const { postApiData, loading } = useFetchData();
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -55,18 +55,20 @@ const Auth = () => {
       const endpoint = isSignUp ? ENDPOINTS.REGISTER : ENDPOINTS.LOGIN;
       try {
         const data = await postApiData(URL + endpoint, formData);
-        if (!isSignUp && data) {
+        successToast(data?.message);
+
+        if (isSignUp) {
+          setIsSignUp(false);
+        } else {
           localStorage.setItem("Token", data?.data?.token);
+          closeModal();
+          navigate('/');
         }
-        successToast(data?.message)
-        closeModal()
-        navigate('/')
       } catch (error) {
-        if(error?.response){
-          errorToast(error?.response?.data?.error)
-        }
-        else{
-          errorToast(error?.message)
+        if (error?.response) {
+          errorToast(error?.response?.data?.error);
+        } else {
+          errorToast(error?.message);
         }
       }
     }
@@ -94,56 +96,68 @@ const Auth = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.inputWrp}>
             {isSignUp && (
+              <>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={errors.name ? styles.error : ""}
+                  />
+                </div>
+                {formData.name && errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
+              </>
+            )}
+            <>
               <div className={styles.inputGroup}>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder={errors.name || "Name"}
-                  value={formData.name}
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
                   onChange={handleChange}
-                  className={errors.name ? styles.error : ""}
+                  className={errors.email ? styles.error : ""}
                 />
               </div>
-            )}
-            <div className={styles.inputGroup}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder={errors.email || "Email"}
-                value={formData.email}
-                onChange={handleChange}
-                className={errors.email ? styles.error : ""}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder={errors.password || "Password"}
-                value={formData.password}
-                onChange={handleChange}
-                className={errors.password ? styles.error : ""}
-              />
-            </div>
-            {isSignUp && (
+              {formData.email && errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
+            </>
+            <>
               <div className={styles.inputGroup}>
-                <label htmlFor="confirmPassword">Confirm Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder={errors.confirmPassword || "Confirm Password"}
-                  value={formData.confirmPassword}
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
                   onChange={handleChange}
-                  className={errors.confirmPassword ? styles.error : ""}
+                  className={errors.password ? styles.error : ""}
                 />
               </div>
+              {formData.password && errors.password && <span className={styles.errorMessage}>{errors.password}</span>}
+            </>
+            {isSignUp && (
+              <>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className={errors.confirmPassword ? styles.error : ""}
+                  />
+                </div>
+                {formData.confirmPassword && errors.confirmPassword && <span className={styles.errorMessage}>{errors.confirmPassword}</span>}
+              </>
             )}
           </div>
           <button className={styles.authSubmitBtn} type="submit">{isSignUp ? "Sign Up" : "Log In"}</button>

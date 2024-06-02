@@ -5,7 +5,6 @@
   align-items: normal;
   gap: 1rem;
   position: relative;
-  min-height: 100vh;
 }
 
 .quizWrp {
@@ -37,7 +36,7 @@
   }
 
   .text{
-    padding: 0rem 0rem;
+    padding: 1rem 0rem;
   }
   
 .textAbsolute{

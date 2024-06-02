@@ -35,8 +35,8 @@ const QuizResults = () => {
     <div>
       {loading && <Loader />}
       {isQuiz ? (
-        <div>
-          <h1>Congrats, the quiz is complete!</h1>
+        <div className={styles.container}>
+          <h1>Congrats Quiz is complete!</h1>
           <div className="image">
             <img src={trophy} alt="Trophy" />
           </div>

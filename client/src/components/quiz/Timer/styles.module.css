@@ -2,11 +2,17 @@
     color: red;
     color: red;
     position: absolute;
-    top: 1rem;
-    right: 3rem;
+    top: 0rem;
+    right: 0rem;
     font-size: 1.5rem;
     font-weight: 600;
   }
   #text{
     display: none;
+  }
+  @media (min-width: 768px) {
+    .timer{
+      top: 1rem;
+      right: 3rem;
+    }
   }
