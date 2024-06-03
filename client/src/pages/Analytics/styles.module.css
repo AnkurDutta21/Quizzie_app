@@ -74,4 +74,7 @@
   cursor: pointer;
   text-wrap: nowrap;
 }
-
+.noData{
+  margin:2rem;
+  font-size: 2rem;
+}

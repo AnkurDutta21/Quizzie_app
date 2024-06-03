@@ -55,3 +55,7 @@
 .date {
   color: #60b84b;
 }
+.noData{
+  margin: 2rem;
+  font-size: 2rem;
+}
